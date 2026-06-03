@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>財務與量能票歸檔 TO DO 與 Check List</title>
+<title>財務與量能票相關與歸檔的 TO DO 與 Check List</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&family=Noto Sans TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -596,6 +596,7 @@ body {
   <a href="#t12-pages">所有對應頁面</a>
 
   <div class="sidebar-group">量能票歸檔，與歸檔後任務</div>
+  <a href="#t14-weekly">每週固定執行</a>
   <a href="#t14-checklist">歸檔檢查事項</a>
   <a href="#t14-pages">所有對應頁面</a>
 </nav>
@@ -616,7 +617,7 @@ body {
     <div class="task-label">
       <div>
         <div class="task-block-title">設計部財務相關事項</div>
-        <div class="task-block-sub">1. 設計部費用追蹤　2. 月度報帳確認與提醒<br>3. 信用卡申請，與相關文件更新　4. 年度預算估算（根據 Jenny or 營運端需求提供與否）<br>5. 需人工續約的軟體與帳號提醒</div>
+        <div class="task-block-sub">1. 設計部費用追蹤　2. 月度報帳確認與提醒3. 信用卡申請，與相關文件更新<br>4. 年度預算估算（根據 Jenny or 營運端需求提供與否）<br>5. 需人工續約的軟體與帳號提醒</div>
       </div>
     </div>
 
@@ -718,10 +719,11 @@ body {
                 <div class="item-note">
                   ＊讓 Jenny 能順利地把舊卡關掉，所有刷卡資料，理論上都可以在設計帳戶的資料庫裡找到<br><br>
                   <strong>交接後 N8N 修改，以及追蹤額度的 Notion 資料庫裡的自動化：</strong><br><br>
-                  <a class="fin-link" href="https://alleypin.app.n8n.cloud/projects/b5EqPaKCAvaqmpJ5/workflows?search=刷卡" target="_blank">N8N 刷卡相關 Workflows</a><br>
-                  請改 email 的 trigger 為 Yaya 帳號，以及 if 節點的末四碼，需改為新的軟體卡；N8N 後面的 Slack 通知也需修改，請根據之後需要推播給誰來設定，傳送的帳號也請記得一併修改<br><br>
-                  <a class="fin-link" href="https://app.notion.com/p/alleypin/2a1bf447adda806cbf72f8e9c8a9cda1?v=2a1bf447adda80b8a41f000c5f06a6b2&source=copy_link" target="_blank">Notion 額度追蹤</a><br>
-                  ＊因權限被調整，目前無法看到，再麻煩 Yaya 自行研究與調整。此資料庫的自動化在於綁定對應的卡號頁面，進行費用剩餘額度的即時計算，目前自動化已停止，故金額非正確的。資料庫中，兩張信用卡額度需手動更新成：印刷卡 10 萬、軟體卡 20 萬
+                  <a class="fin-link" href="https://alleypin.app.n8n.cloud/projects/b5EqPaKCAvaqmpJ5/workflows?search=刷卡" target="_blank">N8N 刷卡相關 Workflows</a>
+                  <div style="line-height:1.85;margin-top:4px;margin-bottom:12px;">請改 email 的 trigger 為 Yaya 帳號，以及 if 節點的末四碼，需改為新的軟體卡；N8N 後面的 Slack 通知也需修改，請根據之後需要推播給誰來設定，傳送的帳號也請記得一併修改</div>
+                  <a class="fin-link" href="https://app.notion.com/p/alleypin/2a1bf447adda806cbf72f8e9c8a9cda1?v=2a1bf447adda80b8a41f000c5f06a6b2&source=copy_link" target="_blank">Notion 額度追蹤</a>
+                  <div style="line-height:1.85;margin-top:4px;margin-bottom:12px;">＊因權限被調整，目前無法看到，再麻煩 Yaya 自行研究與調整。此資料庫的自動化在於綁定對應的卡號頁面，進行費用剩餘額度的即時計算，目前自動化已停止，故金額非正確的。資料庫中，兩張信用卡額度需手動更新成：印刷卡 10 萬、軟體卡 20 萬</div>
+                  <div style="color:var(--color-cta);font-weight:600;font-size:12.5px;">請 Yaya 協助與支援於 06.10 之前完成自動化設定的更新與移轉，感謝</div>
                 </div>
               </div>
             </li>
@@ -888,6 +890,30 @@ body {
       </div>
     </div>
     <div class="info-box" style="margin-bottom:16px;">若該月份的頁面沒開啟，請通知 Joy</div>
+
+    <!-- 每週固定執行 -->
+    <div class="confirm-section" id="t14-weekly" style="margin-bottom:16px;">
+      <div class="confirm-header" style="background:var(--color-primary);color:#fff;">
+        每週固定執行
+        <span style="background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:9999px;margin-left:10px;letter-spacing:0.08em;">每週</span>
+      </div>
+      <div class="confirm-body">
+        <ul class="checklist">
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              每週一早上手動按頁面中的「Update date info」按鈕，自動帶入本週日期
+              <div class="item-note">
+                <a class="fin-link" href="https://app.notion.com/p/alleypin/54664ca30275470a99257649e677a7b2?v=8ed7bbf8b75b441ba5ed036aff1c2062" target="_blank">Weekly 頁面</a>
+                <div style="line-height:1.85;margin-top:4px;">頁面會於每週一自動新增，但日期需手動觸發按鈕才會帶入<br>
+                遇到過年或整週放假，需重新調整頁面中「週數計算」的函數，再按下 Update date info 按鈕<br>
+                ⚠️ 需在每週一到五期間按下按鈕，否則日期會跑掉</div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <!-- 量能票歸檔檢查事項 -->
     <div class="confirm-section" id="t14-checklist">
