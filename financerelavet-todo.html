@@ -533,7 +533,7 @@ body {
     <div class="task-label">
       <div>
         <div class="task-block-title">設計部財務相關事項</div>
-        <div class="task-block-sub">1. 設計部費用追蹤　2. 月度報帳確認與提醒　3. 信用卡申請，與相關文件更新 · 年度預算估算（根據 Jenny or 營運端需求提供與否）<br>4. 需人工續約的軟體與帳號提醒</div>
+        <div class="task-block-sub">1. 設計部費用追蹤　　2. 月度報帳確認與提醒<br>3. 信用卡申請，與相關文件更新 · 年度預算估算（根據 Jenny or 營運端需求提供與否）　4. 需人工續約的軟體與帳號提醒</div>
       </div>
     </div>
 
@@ -589,7 +589,10 @@ body {
           <ul class="checklist">
             <li>
               <input type="checkbox">
-              <div class="item-wrap">負責 Mobbie 的報帳，一季一次</div>
+              <div class="item-wrap">
+                負責 Mobbie 的報帳，一季一次
+                <div class="item-note">請記得去信箱收發票，每季第二個月左右報帳</div>
+              </div>
             </li>
             <li>
               <input type="checkbox">
@@ -630,7 +633,7 @@ body {
               <div class="item-wrap">
                 <strong>⚠️ 當信用卡進行更換時</strong>：提醒所有有刷該卡的設計師，修改訂閱服務的刷卡卡號，且請大家更新設計帳戶上的刷卡資料（key 刷卡別）
                 <div class="item-note">
-                  ＊讓 Jenny 能順利地把舊卡關掉<br><br>
+                  ＊讓 Jenny 能順利地把舊卡關掉，所有刷卡資料，理論上都可以在設計帳戶的資料庫裡找到<br><br>
                   <strong>交接後 N8N 修改，以及追蹤額度的 Notion 資料庫裡的自動化：</strong><br><br>
                   <a class="fin-link" href="https://alleypin.app.n8n.cloud/projects/b5EqPaKCAvaqmpJ5/workflows?search=刷卡" target="_blank">N8N 刷卡相關 Workflows</a><br>
                   請改 email 的 trigger 為 Yaya 帳號，以及 if 節點的末四碼，需改為新的軟體卡；N8N 後面的 Slack 通知也需修改，請根據之後需要推播給誰來設定，傳送的帳號也請記得一併修改<br><br>
