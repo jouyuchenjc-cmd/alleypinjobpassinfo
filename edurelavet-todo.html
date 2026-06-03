@@ -17,7 +17,7 @@
   --color-primary: #548EB8;
   --color-primary-light: #97AFCA;
   --color-primary-dark: #4C7A91;
-  --color-primary-subtle: #BAC2D0;
+  --color-primary-subtle: #E5D9BE;
   --color-cta: #C66240;
   --color-cta-subtle: #F0D4C6;
   --color-success: #4A7A65;
@@ -120,6 +120,7 @@ body {
 .doc-title {
   font-size: 26px;
   font-weight: 600;
+  letter-spacing: 0.05em;
   color: var(--color-text);
   margin-bottom: 6px;
 }
@@ -138,7 +139,7 @@ body {
 
 .meta-chip {
   background: var(--color-primary-subtle);
-  color: var(--color-primary-dark);
+  color: #5a3a10;
   font-size: 12px;
   font-weight: 600;
   padding: 3px 12px;
@@ -183,6 +184,7 @@ body {
 .section-title {
   font-size: 17px;
   font-weight: 600;
+  letter-spacing: 0.05em;
   color: #fff;
 }
 
@@ -273,7 +275,7 @@ body {
   vertical-align: middle;
 }
 
-.tag-primary { background: var(--color-primary-subtle); color: var(--color-primary-dark); }
+.tag-primary { background: var(--color-primary-subtle); color: #5a3a10; }
 .tag-success { background: var(--color-success-subtle); color: var(--color-success); }
 .tag-warning { background: var(--color-warning-subtle); color: #6b5030; }
 .tag-cta { background: var(--color-cta-subtle); color: var(--color-cta); }
@@ -516,7 +518,7 @@ body {
 
 .mobile-nav-btn {
   background: var(--color-primary-subtle);
-  color: var(--color-primary-dark);
+  color: #5a3a10;
   border: none;
   border-radius: 8px;
   padding: 6px 14px;
@@ -567,7 +569,13 @@ body {
 <div class="mobile-nav">
   <div class="mobile-nav-bar">
     <span class="mobile-nav-title">DBC 新人顧問設計需求教育訓練</span>
-    <button class="mobile-nav-btn" onclick="toggleNav()">目錄 ▾</button>
+    <button class="mobile-nav-btn" onclick="toggleNav()" aria-label="目錄">
+      <span style="display:flex;flex-direction:column;gap:4px;width:18px;">
+        <span style="display:block;height:2px;background:currentColor;border-radius:1px;"></span>
+        <span style="display:block;height:2px;background:currentColor;border-radius:1px;"></span>
+        <span style="display:block;height:2px;background:currentColor;border-radius:1px;"></span>
+      </span>
+    </button>
   </div>
   <div class="mobile-nav-drawer" id="mobileDrawer">
     <a href="#prep" onclick="closeNav()">1｜前期準備清單</a>
