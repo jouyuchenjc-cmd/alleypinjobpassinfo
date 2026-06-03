@@ -17,7 +17,7 @@
   --color-primary: #548EB8;
   --color-primary-light: #97AFCA;
   --color-primary-dark: #4C7A91;
-  --color-primary-subtle: #BAC2D0;
+  --color-primary-subtle: #E5D9BE;
   --color-cta: #C66240;
   --color-cta-subtle: #F0D4C6;
   --color-success: #4A7A65;
@@ -128,6 +128,7 @@ body {
 .doc-title {
   font-size: 26px;
   font-weight: 600;
+  letter-spacing: 0.05em;
   color: var(--color-text);
   margin-bottom: 6px;
 }
@@ -151,7 +152,7 @@ body {
   border-radius: 9999px;
 }
 
-.meta-chip.blue { background: var(--color-primary-subtle); color: var(--color-primary-dark); }
+.meta-chip.blue { background: var(--color-primary-subtle); color: #5a3a10; }
 .meta-chip.green { background: var(--color-success-subtle); color: var(--color-success); }
 
 /* Task block separator */
@@ -181,6 +182,7 @@ body {
 .task-block-title {
   font-size: 19px;
   font-weight: 600;
+  letter-spacing: 0.05em;
   color: var(--color-text);
 }
 
@@ -236,6 +238,7 @@ body {
 .period-name {
   font-size: 12.5px;
   font-weight: 700;
+  letter-spacing: 0.05em;
   color: var(--color-text);
 }
 
@@ -327,7 +330,7 @@ body {
 }
 .tag-danger { background: var(--color-danger-subtle); color: #7a3a40; }
 .tag-warning { background: var(--color-warning-subtle); color: #6b5030; }
-.tag-primary { background: var(--color-primary-subtle); color: var(--color-primary-dark); }
+.tag-primary { background: var(--color-primary-subtle); color: #5a3a10; }
 .tag-success { background: var(--color-success-subtle); color: var(--color-success); }
 
 /* Finance links */
@@ -361,7 +364,8 @@ body {
   background: var(--color-primary-subtle);
   font-size: 12.5px;
   font-weight: 700;
-  color: var(--color-primary-dark);
+  letter-spacing: 0.05em;
+  color: #5a3a10;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -433,7 +437,8 @@ body {
   background: var(--color-primary-subtle);
   font-size: 12.5px;
   font-weight: 700;
-  color: var(--color-primary-dark);
+  letter-spacing: 0.05em;
+  color: #5a3a10;
 }
 
 .confirm-body { padding: 12px 18px; }
@@ -476,7 +481,7 @@ body {
 
 .exec-step {
   background: var(--color-primary-subtle);
-  color: var(--color-primary-dark);
+  color: #5a3a10;
   font-size: 12.5px;
   font-weight: 600;
   padding: 6px 14px;
@@ -511,7 +516,7 @@ body {
 }
 .mobile-nav-btn {
   background: var(--color-primary-subtle);
-  color: var(--color-primary-dark);
+  color: #5a3a10;
   border: none;
   border-radius: 8px;
   padding: 6px 14px;
@@ -564,7 +569,13 @@ body {
 <div class="mobile-nav">
   <div class="mobile-nav-bar">
     <span class="mobile-nav-title">財務與量能票歸檔</span>
-    <button class="mobile-nav-btn" onclick="toggleNav()">目錄 ▾</button>
+    <button class="mobile-nav-btn" onclick="toggleNav()" aria-label="目錄">
+      <span style="display:flex;flex-direction:column;gap:4px;width:18px;">
+        <span style="display:block;height:2px;background:currentColor;border-radius:1px;"></span>
+        <span style="display:block;height:2px;background:currentColor;border-radius:1px;"></span>
+        <span style="display:block;height:2px;background:currentColor;border-radius:1px;"></span>
+      </span>
+    </button>
   </div>
   <div class="mobile-nav-drawer" id="mobileDrawer">
     <div class="mobile-nav-group">設計部財務相關事項</div>
@@ -574,7 +585,8 @@ body {
     <a href="#t12-other" onclick="closeNav()">其他事項</a>
     <a href="#t12-cc" onclick="closeNav()">信用卡相關頁面</a>
     <a href="#t12-pages" onclick="closeNav()">所有對應頁面</a>
-    <div class="mobile-nav-group">量能票歸檔，與歸檔後任務</div>
+    <div class="mobile-nav-group">量能票相關資料庫，和歸檔事項，與歸檔後任務</div>
+    <a href="#t14-notes" onclick="closeNav()">執行週期與注意事項</a>
     <a href="#t14-checklist" onclick="closeNav()">歸檔檢查事項</a>
     <a href="#t14-pages" onclick="closeNav()">所有對應頁面</a>
   </div>
@@ -595,7 +607,8 @@ body {
   <a href="#t12-cc-update">6 月信用卡更新 To Do</a>
   <a href="#t12-pages">所有對應頁面</a>
 
-  <div class="sidebar-group">量能票歸檔，與歸檔後任務</div>
+  <div class="sidebar-group">量能票相關資料庫，和歸檔事項，與歸檔後任務</div>
+  <a href="#t14-notes">執行週期與注意事項</a>
   <a href="#t14-weekly">每週固定執行</a>
   <a href="#t14-checklist">歸檔檢查事項</a>
   <a href="#t14-pages">所有對應頁面</a>
@@ -604,11 +617,11 @@ body {
 <!-- Main -->
 <main class="main">
   <div class="doc-header">
-    <div class="doc-title">財務與量能票歸檔 TO DO 與 Check List</div>
+    <div class="doc-title">財務與量能票歸檔相關的 TO DO 與 Check List</div>
     <div class="doc-sub">設計部每月定期執行的行政任務，數據需注意與營運資料相關</div>
     <div class="doc-meta">
       <span class="meta-chip blue">設計部財務相關事項</span>
-      <span class="meta-chip green">量能票歸檔，與歸檔後任務</span>
+      <span class="meta-chip green">量能票相關資料庫，和歸檔事項，與歸檔後任務</span>
     </div>
   </div>
 
@@ -617,7 +630,7 @@ body {
     <div class="task-label">
       <div>
         <div class="task-block-title">設計部財務相關事項</div>
-        <div class="task-block-sub">1. 設計部費用追蹤　2. 月度報帳確認與提醒3. 信用卡申請，與相關文件更新<br>4. 年度預算估算（根據 Jenny or 營運端需求提供與否）<br>5. 需人工續約的軟體與帳號提醒</div>
+        <div class="task-block-sub">1. 設計部費用追蹤　2. 月度報帳確認與提醒　3. 信用卡申請，與相關文件更新<br>4. 年度預算估算（根據 Jenny or 營運端需求提供與否）　5. 需人工續約的軟體與帳號提醒</div>
       </div>
     </div>
 
@@ -785,11 +798,12 @@ body {
       <div class="cc-section-body">
         <div class="cc-links">
           <a class="fin-link" href="https://app.notion.com/p/alleypin/2a1bf447adda80d782b7cc90e273c721" target="_blank">信用卡刷卡資料</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/1-233bf447adda802397c2cfd285ea4a9a" target="_blank">信用卡資料與文件</a>
           <a class="fin-link" href="https://app.notion.com/p/alleypin/Commeet-b1cc49a3ac874e8083c6825795e8533f" target="_blank">Commeet 報帳教學</a>
           <a class="fin-link" href="https://app.notion.com/p/alleypin/Commeet-1dfbf447adda80e6a8e2f462e842e041" target="_blank">設計部門信用卡報帳帳號資料</a>
           <a class="fin-link" href="https://alleypin.commeet.co/ap/login#" target="_blank">Commeet 報帳頁面</a>
         </div>
-        <p style="font-size:12.5px;color:var(--color-cta);margin-bottom:14px;">部門信用卡請選 Commeet 帳號登入；個人帳款、代墊或補助申請，請用 Google 登入</p>
+        <p style="font-size:12.5px;color:var(--color-cta);margin-bottom:14px;">部門信用卡請選 Commeet 帳號登入；個人帳款、代墊或補助申請，請用 Google 登入<br><b>若有任何信用卡申請相關的問題，請詳閱信用卡資料與文件，感謝</b></p>
 
         <div class="cc-section-header" style="background:var(--color-warning-subtle);color:#6b5030;border-radius:6px;margin-bottom:10px;">本次信用卡申請資料</div>
         <p style="font-size:12.5px;color:var(--color-text-secondary);margin-bottom:10px;">請登入部門 Commeet 帳號進行信用卡申請，審核完成後會寄信到信箱，需提供末四碼與 CVV 資料給 Jenny 做後續財務資料卡片管理紀錄</p>
@@ -875,21 +889,33 @@ body {
 
   </div>
 
-  <!-- Divider -->
+  <!-- Divider -->x
   <div class="task-divider"></div>
 
   <!-- ══ TASK 14 ══ -->
   <div class="task-block" id="task14">
     <div class="task-label">
       <div>
-        <div class="task-block-title">量能票歸檔，與歸檔後任務</div>
-        <div class="task-block-sub">
-          每月月底執行一次，提交數據給 Operation team 資料填寫區（請於每月 10 號前完成填寫）
-          <a class="fin-link" href="https://docs.google.com/spreadsheets/d/1qg_UQfgP17TN9NJHOKhE-ICjggl9gRueNDWJjH_N2eM/edit?gid=410664811#gid=410664811" target="_blank" style="margin-left:8px;">Operation team 填寫區</a>
+        <div class="task-block-title">量能票相關資料庫，和歸檔事項，與歸檔後任務</div>
+      </div>
+    </div>
+    <!-- 執行週期與注意事項 -->
+    <div class="confirm-section" id="t14-notes" style="margin-bottom:16px;">
+      <div class="confirm-header" style="background:#E5D9BE;color:#5a3a10;">
+        執行週期，與注意事項
+      </div>
+      <div class="confirm-body" style="font-size:13px;line-height:1.85;color:var(--color-text);">
+        <div style="margin-bottom:8px;">・<strong>Weekly 日期：</strong>自動更新，需於每週一到五之間手動觸發按鈕，最晚不可超過週五，否則帶入日期會跑掉；目前帶入的日期為 4 週後的 Weekly</div>
+        <div style="margin-bottom:8px;">・<strong>歸檔執行：</strong>每月最後一個上班日早上執行一次，因大家多少會忘記填，請保留時間給各位設計調整後，確保數據於每月 10 號前提交至 Operation team 填寫區
+          <a class="fin-link" href="https://docs.google.com/spreadsheets/d/1qg_UQfgP17TN9NJHOKhE-ICjggl9gRueNDWJjH_N2eM/edit?gid=410664811#gid=410664811" target="_blank" style="margin-left:6px;">Operation team 填寫區</a>
+        </div>
+        <div style="color:var(--color-cta);font-weight:600;border-top:1px solid #d4c9a8;padding-top:8px;margin-top:4px;line-height:1.85;">
+          數據填寫，之前都為 Joy 幫所有人進行填寫，未來的話，請 Yaya 自行決定執行方式<br>
+          此份填寫表目前後續數據管理與檔案權限，已從 Jimmy 交接到 Joy 負責處理<br>
+          <span style="color:var(--color-cta);font-weight:400;font-size:12px;">＊若該月份的頁面沒開啟，請通知 Joy</span>
         </div>
       </div>
     </div>
-    <div class="info-box" style="margin-bottom:16px;">若該月份的頁面沒開啟，請通知 Joy</div>
 
     <!-- 每週固定執行 -->
     <div class="confirm-section" id="t14-weekly" style="margin-bottom:16px;">
