@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>任務 2｜設計支援與新人顧問教育訓練 To Do</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #EDE8DF;
+  --color-surface: #F5F2EC;
+  --color-surface-low: #D9D3C7;
+  --color-text: #2C3A4A;
+  --color-text-secondary: #5A6A7A;
+  --color-text-disabled: #9AABB8;
+  --color-primary: #548EB8;
+  --color-primary-light: #97AFCA;
+  --color-primary-dark: #4C7A91;
+  --color-primary-subtle: #BAC2D0;
+  --color-cta: #C66240;
+  --color-cta-subtle: #F0D4C6;
+  --color-success: #4A7A65;
+  --color-success-subtle: #C5D9D2;
+  --color-warning: #9A7845;
+  --color-warning-subtle: #E5D8BE;
+  --color-danger: #D28187;
+  --color-danger-subtle: #E9D7D5;
+  --color-info: #627787;
+  --color-info-subtle: #BAC2D0;
+  --shadow-1: 0 1px 3px rgba(44,58,74,0.12), 0 1px 2px rgba(44,58,74,0.08);
+  --shadow-2: 0 4px 8px rgba(44,58,74,0.12), 0 2px 4px rgba(44,58,74,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Quicksand', 'Noto Sans TC', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  letter-spacing: 0.05em;
+}
+
+.layout { display: flex; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 24px 0;
+  z-index: 10;
+}
+
+.sidebar-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 20px 12px;
+  border-bottom: 1px solid var(--color-surface-low);
+  margin-bottom: 8px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 8px 20px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+
+.sidebar a:hover {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  border-left-color: var(--color-primary-light);
+}
+
+.sidebar a.active {
+  color: var(--color-primary-dark);
+  border-left-color: var(--color-primary);
+  background: var(--color-bg);
+  font-weight: 600;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 40px 48px;
+  max-width: 860px;
+}
+
+/* Header */
+.doc-header {
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--color-surface-low);
+}
+
+.doc-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.doc-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.doc-sub {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 14px;
+}
+
+.doc-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.meta-chip {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary-dark);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 9999px;
+}
+
+.meta-chip.cta {
+  background: var(--color-cta-subtle);
+  color: var(--color-cta);
+}
+
+/* Section Card */
+.section-card {
+  background: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+
+.section-header {
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-header.blue { background: var(--color-primary); }
+.section-header.dark { background: var(--color-primary-dark); }
+.section-header.teal { background: #435E67; }
+.section-header.success { background: var(--color-success); }
+.section-header.cta { background: var(--color-cta); }
+
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.section-body { padding: 20px 24px; }
+
+/* Sub section */
+.sub-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--color-surface-low);
+}
+
+/* Checklist */
+.checklist { list-style: none; }
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--color-surface-low);
+}
+
+.checklist li:last-child { border-bottom: none; }
+
+.checklist input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 17px;
+  height: 17px;
+  border: 2px solid var(--color-surface-low);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  position: relative;
+}
+
+.checklist input[type="checkbox"]:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checklist input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  width: 5px;
+  height: 9px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.checklist li.checked .item-wrap,
+.checklist li.checked .item-label {
+  color: var(--color-text-disabled);
+  text-decoration: line-through;
+  text-decoration-color: var(--color-surface-low);
+}
+
+.checklist li .item-label { flex: 1; }
+
+.checklist li .item-note {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+  line-height: 1.85;
+}
+
+/* Tag */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.tag-primary { background: var(--color-primary-subtle); color: var(--color-primary-dark); }
+.tag-success { background: var(--color-success-subtle); color: var(--color-success); }
+.tag-warning { background: var(--color-warning-subtle); color: #6b5030; }
+.tag-cta { background: var(--color-cta-subtle); color: var(--color-cta); }
+
+/* Timeline row (post-training) */
+.timeline { display: flex; flex-direction: column; gap: 0; }
+
+.tl-row {
+  display: flex;
+  gap: 0;
+  position: relative;
+}
+
+.tl-row:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 36px;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-surface-low);
+}
+
+.tl-dot {
+  width: 38px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.tl-dot-inner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid var(--color-surface);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+.tl-dot-inner.dim {
+  background: var(--color-primary-light);
+  box-shadow: 0 0 0 2px var(--color-surface-low);
+}
+
+.tl-dot-inner.end {
+  background: var(--color-success);
+  box-shadow: 0 0 0 2px var(--color-success-subtle);
+}
+
+.tl-content {
+  flex: 1;
+  padding: 8px 8px 20px 4px;
+}
+
+.tl-week {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.tl-week.dim { color: var(--color-text-secondary); }
+.tl-week.end { color: var(--color-success); }
+
+.tl-items { list-style: none; }
+
+.tl-items li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 13.5px;
+  color: var(--color-text);
+}
+
+.tl-items li::before {
+  content: '·';
+  color: var(--color-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
+/* Contact grid */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.contact-card {
+  border-radius: 8px;
+  padding: 12px 16px;
+  border-left: 4px solid;
+}
+
+.contact-card.primary {
+  background: var(--color-primary-subtle);
+  border-color: var(--color-primary);
+}
+
+.contact-card.secondary {
+  background: var(--color-bg);
+  border-color: var(--color-surface-low);
+}
+
+.contact-name {
+  font-weight: 600;
+  font-size: 13.5px;
+  margin-bottom: 3px;
+}
+
+.contact-desc {
+  font-size: 12.5px;
+  color: var(--color-text-secondary);
+}
+
+/* Material grid */
+.material-grid { display: flex; flex-direction: column; gap: 8px; }
+
+.material-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--color-bg);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.material-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--color-primary-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 15px;
+}
+
+.material-text { flex: 1; }
+
+.material-name {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.material-desc {
+  font-size: 12.5px;
+  color: var(--color-text-secondary);
+}
+
+/* Doc links */
+.doc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-success-subtle);
+  color: var(--color-success);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  margin-top: 5px;
+  margin-right: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+.doc-link:hover {
+  background: var(--color-success);
+  color: #fff;
+}
+
+/* Info box */
+.info-box {
+  background: var(--color-info-subtle);
+  border-left: 4px solid var(--color-info);
+  padding: 10px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 10px 0 0;
+}
+
+/* Divider */
+.divider { height: 1px; background: var(--color-surface-low); margin: 16px 0; }
+
+/* Reset button */
+#reset-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: var(--color-cta);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Quicksand', 'Noto Sans TC', sans-serif;
+  cursor: pointer;
+  box-shadow: var(--shadow-2);
+  transition: background 0.15s, transform 0.1s;
+  z-index: 100;
+}
+
+#reset-btn:hover { background: #b05535; transform: scale(1.03); }
+#reset-btn:active { transform: scale(0.97); }
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { padding: 24px 18px; }
+  .contact-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-title">教育訓練 To Do</div>
+  <a href="#prep">1｜前期準備清單</a>
+  <a href="#contact">2｜對應人員</a>
+  <a href="#training">3｜訓練中內容</a>
+  <a href="#materials">4｜教育訓練素材</a>
+  <a href="#followup">5｜結束後 2 個月</a>
+</nav>
+
+<!-- Main -->
+<main class="main">
+  <div class="doc-header">
+    <div class="doc-title">DBC 新人顧問設計需求教育訓練</div>
+    <div class="doc-sub">目標：讓新人知道如何使用 DBC 開票中心，以及怎樣開好一個設計能理解的設計需求</div>
+    <div class="doc-meta">
+      <span class="meta-chip">觸發時機：新顧問加入</span>
+      <span class="meta-chip">追蹤期：入職後 2 個月</span>
+      <span class="meta-chip cta">結束後轉被動支援</span>
+    </div>
+  </div>
+
+  <!-- Section 1: 前期準備 -->
+  <div class="section-card" id="prep">
+    <div class="section-header blue">
+      <div>
+        <div class="section-num">Section 1</div>
+        <div class="section-title">教育訓練前期準備清單</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="sub-title">Onboarding 前</div>
+      <ul class="checklist">
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            向東尼確認新人到職時間
+            <div class="item-note">東尼很常忘記提早說</div>
+          </div>
+        </li>
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            與東尼約教育訓練時間<span class="tag tag-warning">不能在 onboarding 當天，但不可超過一週</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="divider"></div>
+      <div class="sub-title">Onboarding 當天</div>
+      <ul class="checklist">
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            確認新人是否已有 DBC workspace 權限
+            <div class="item-note">如果沒有，請東尼加入</div>
+          </div>
+        </li>
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            確認新人是否已有設計部（備用）雲端帳號的權限
+            <div class="item-note">如果沒有，請 Yaya 加入</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="divider"></div>
+      <div class="sub-title">教育訓練日前</div>
+      <ul class="checklist">
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            確認新人由誰負責帶，與負責人 sync 教育訓練時間
+            <div class="item-note">到職前一週確認</div>
+          </div>
+        </li>
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">向負責帶新人的顧問拿新人即將負責的專案清單</div>
+        </li>
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">確認教育訓練的實作開票題，是否要直接開新人即將負責的專案</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Section 2: 窗口 -->
+  <div class="section-card" id="contact">
+    <div class="section-header dark">
+      <div>
+        <div class="section-num">Section 2</div>
+        <div class="section-title">整個流程會需要對應到的人員</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="contact-grid">
+        <div class="contact-card primary">
+          <div class="contact-name">東尼</div>
+          <div class="contact-desc">約教育訓練時間。</div>
+        </div>
+        <div class="contact-card primary">
+          <div class="contact-name">負責帶新人的顧問</div>
+          <div class="contact-desc">同步教育訓練時間、拿新人要接的專案清單。</div>
+        </div>
+        <div class="contact-card primary">
+          <div class="contact-name">新人</div>
+          <div class="contact-desc">主要溝通對象。訓練期間定期同步開卡狀況與問題。</div>
+        </div>
+        <div class="contact-card secondary">
+          <div class="contact-name">對應專案的負責設計師</div>
+          <div class="contact-desc">告知新人負責專案的設計師。若有外包設計師，請哲均協助告知。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: 訓練中內容 -->
+  <div class="section-card" id="training">
+    <div class="section-header teal">
+      <div>
+        <div class="section-num">Section 3</div>
+        <div class="section-title">教育訓練中內容</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <ul class="checklist">
+
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            <strong>1｜介紹 DBC 開票中心</strong>
+            <div class="item-note">
+              頁面上方是休假日查詢，下方的本週、下兩週，以及顧問個人頁面，說明如何新增休假日<br>
+              <a class="doc-link" href="https://app.notion.com/p/alleypin/DBC-2-0-c9f02c404d3748a190bf6c2e690a5dc0" target="_blank">DBC 開票中心</a><br>
+              ＊休假日標籤需修改 code：請新人提供 2 個 emoji 後，修改開票中心裡頁面點開 → 休假日專用 → 休假顯示（補休假專用未填）裡頭的函數
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            <strong>2｜使用設計需求教育訓練（更新版）進行教育訓練</strong>
+            <div class="item-note">
+              請新人複製第一排的空白資料，包含：<br>
+              1. [專案名稱]No. 一張空白卡的樣子<br>
+              2. 練習 01 - 看圖逆向開出插畫需求<br>
+              3. 練習 02 - 看圖逆向開出照片需求<br>
+              4. 練習 03 - 從 0 開一張設計需求<br>
+              快速複製方式：Hover 票 → 點三個點 → 選「複製」→ 更改負責顧問，改成新人的名字<br>
+              <a class="doc-link" href="https://app.notion.com/p/alleypin/917049346cff4c6aa5357df7e1c41306" target="_blank">設計需求教育訓練（更新版）</a><br>
+              ＊交接時需確認負責設計是不是 noreply2 帳號
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            <strong>3｜拍照與選照片素材的注意事項</strong>
+            <div class="item-note">
+              <a class="doc-link" href="https://app.notion.com/p/alleypin/45a126da8c944cfebd6a7dd9f113353e" target="_blank">Notion 頁面</a>
+              <a class="doc-link" href="https://drive.google.com/drive/u/1/my-drive" target="_blank">Workshop 檔案（Google Drive）</a><br>
+              ＊直接用 Workshop 檔案講，最後面有 Figma 畫面評估系統的練習題
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            <strong>4｜Figma 快速畫面評估系統介紹</strong>
+            <div class="item-note">
+              請新人建立自己的 Figma 帳號，開啟檔案後複製檔案自己用<br>
+              主要是讓顧問能夠自行判斷出給的資訊量是否足夠<br>
+              <a class="doc-link" href="https://app.notion.com/p/alleypin/Figma-a9fc449143d6436b9a42decd8b889f4b" target="_blank">Figma 頁面</a>
+              <a class="doc-link" href="https://docs.google.com/presentation/d/1ADe8vdJYhttFmg4TTHcZO2zndUKeIdYy/edit?slide=id.p3#slide=id.p3" target="_blank">Google Slides 版本（含更多文字說明）</a>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            <strong>5｜找一份近期開得不錯的設計需求給他看</strong>
+            <div class="item-note">
+              告訴他哪裡好、之後開要注意什麼；同時說明開卡流程有哪些要填，以及開卡模板裡的資訊說明<br>
+              ＊這以後就是你檢查他有沒有做好的標準
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            <strong>6｜說明開卡規則</strong>
+            <div class="item-note">
+              a. 顧問不可以修改日期，如有情況請告知負責設計，請他調整與最後決定<br>
+              b. 時間期限當天 09:00 之前必須完成開卡<br>
+              c. 開完卡要確保燈被關掉<br>
+              d. 如果有狀況無法準時開卡，要告知負責設計，或在標題上留言說明情況及預計何時開好；但注意，一旦不準時，設計就有權利不在當天提供圖
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            <strong>7｜第一題：完成基本卡位要填的項目</strong>
+            <div class="item-note">標題、專案名稱、負責顧問</div>
+          </div>
+        </li>
+
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            <strong>8｜第二題、第三題：根據已完成的圖，逆向開出完整的設計需求</strong>
+            <div class="item-note">
+              第二題重點：確保能用文字表述出插畫要啥<br>
+              第三題重點：如果要找到照片素材中類似的圖，關鍵字怎麼描述
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            <strong>9｜第四題：實際開一張設計需求</strong>
+            <div class="item-note">
+              如果負責帶他的顧問已提供他實際要開的卡，請他直接開那張；沒有的話再用此題進行練習<br>
+              ＊此題完成後的確認：除了看他開的能不能讓設計理解之外，也需要給負責帶他的顧問確認內容是否可行
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+  <!-- Section 4: 素材 -->
+  <div class="section-card" id="materials">
+    <div class="section-header success">
+      <div>
+        <div class="section-num">Section 4</div>
+        <div class="section-title">教育訓練素材</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="material-grid">
+        <div class="material-item">
+          <div class="material-text">
+            <div class="material-name">DBC 開票中心</div>
+            <div class="material-desc"><a class="doc-link" href="https://app.notion.com/p/alleypin/DBC-2-0-c9f02c404d3748a190bf6c2e690a5dc0" target="_blank">開票中心頁面</a></div>
+          </div>
+        </div>
+        <div class="material-item">
+          <div class="material-text">
+            <div class="material-name">設計需求教育訓練（更新版）</div>
+            <div class="material-desc"><a class="doc-link" href="https://app.notion.com/p/alleypin/917049346cff4c6aa5357df7e1c41306" target="_blank">Notion 實際操作頁面</a></div>
+          </div>
+        </div>
+        <div class="material-item">
+          <div class="material-text">
+            <div class="material-name">拍照與選照片素材的注意事項</div>
+            <div class="material-desc">
+              <a class="doc-link" href="https://app.notion.com/p/alleypin/45a126da8c944cfebd6a7dd9f113353e" target="_blank">Notion 文字版說明</a>
+              <a class="doc-link" href="https://drive.google.com/drive/u/1/my-drive" target="_blank">Workshop 檔案</a>
+            </div>
+          </div>
+        </div>
+        <div class="material-item">
+          <div class="material-text">
+            <div class="material-name">Figma 快速畫面評估系統</div>
+            <div class="material-desc">
+              <a class="doc-link" href="https://app.notion.com/p/alleypin/Figma-a9fc449143d6436b9a42decd8b889f4b" target="_blank">Notion 文字版介紹</a>
+              <a class="doc-link" href="https://www.figma.com/file/WjiaATvx4qraTG4n2W0Tnq/For-社群的畫面快速評估系統-(可編輯版本)?node-id=2%3A4&t=e14do7RJewn0m8Lz-0" target="_blank">Figma 檔案</a>
+              <a class="doc-link" href="https://docs.google.com/presentation/d/1ADe8vdJYhttFmg4TTHcZO2zndUKeIdYy/edit?slide=id.p3#slide=id.p3" target="_blank">Google Slides</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: 結束後追蹤 -->
+  <div class="section-card" id="followup">
+    <div class="section-header cta">
+      <div>
+        <div class="section-num">Section 5</div>
+        <div class="section-title">教育訓練日結束後 — 追蹤</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="sub-title">審核點</div>
+      <ul class="checklist">
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            追蹤接下來 1–2 個月新人開的所有設計需求
+            <div class="item-note">追蹤時間長短取決於新人開卡完整度，若太差就延長；基本以一個月為單位</div>
+          </div>
+        </li>
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            跟負責設計確認是否有溝通上需要支援的
+            <div class="item-note">教育訓練完之後的 1–2 個月持續執行，確認合作上是否有異常或需要介入的地方</div>
+          </div>
+        </li>
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            設計需求內容：設計師能理解，無需額外詢問確認
+            <div class="item-note">標準是讀起來不用通靈就算還行。參考基準：Sherry 的卡是 80 分，新人至少要達到 60 分——大概是跟你合作的顧問裡，開卡不算最完整但也不用靠通靈才能做的那個水準</div>
+          </div>
+        </li>
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            與新人合作的設計師：確認溝通狀況，無異常
+            <div class="item-note">主動跟合作設計師確認一下，確保沒有其他狀況；若有投訴需處理</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="divider"></div>
+      <div class="sub-title">設計需求基本要求（評審依據）</div>
+      <ul class="checklist">
+        <li><input type="checkbox"><div class="item-wrap">標題與圖片內容要符合邏輯</div></li>
+        <li><input type="checkbox"><div class="item-wrap">內容能夠讀完之後，直接製作出來，無需確認資料，或是調整資訊量後，才能製作</div></li>
+        <li><input type="checkbox"><div class="item-wrap">開卡內容要能夠辨別出資訊層級</div></li>
+        <li><input type="checkbox"><div class="item-wrap">需要畫插畫，或是參考的圖必須附上，或是提供具體文字描述</div></li>
+        <li><input type="checkbox"><div class="item-wrap">準時且提早開卡</div></li>
+        <li><input type="checkbox"><div class="item-wrap">哪些素材要設計提供，必須標示出來，且提供素材的判斷關鍵字</div></li>
+      </ul>
+
+      <div class="divider"></div>
+      <div class="sub-title">狀況處理</div>
+      <ul class="checklist">
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            若新人開卡內容太差，或不知道怎麼改：去找負責帶他的顧問反應，或直接找東尼處理
+          </div>
+        </li>
+      </ul>
+
+      <div class="divider"></div>
+      <div class="sub-title">其他注意事項</div>
+      <ul class="checklist">
+        <li>
+          <input type="checkbox">
+          <div class="item-wrap">
+            如果教育訓練後開卡問題很多，或是被設計投訴，東尼可能會找你討論如何優化教育訓練，或是針對這個新人是否需要做額外的調整與訓練
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <div style="height:40px;"></div>
+</main>
+
+<!-- Reset button -->
+<button id="reset-btn" onclick="resetAll()" title="清除所有勾選">
+  重置所有勾選
+</button>
+</div>
+
+<script>
+const sections = document.querySelectorAll('.section-card');
+const links = document.querySelectorAll('.sidebar a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  links.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+});
+
+function resetAll() {
+  document.querySelectorAll('.checklist input[type="checkbox"]').forEach(cb => {
+    cb.checked = false;
+  });
+}
+</script>
+</body>
+</html>

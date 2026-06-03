@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>財務與量能票歸檔 TO DO 與 Check List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&family=Noto Sans TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #EDE8DF;
+  --color-surface: #F5F2EC;
+  --color-surface-low: #D9D3C7;
+  --color-text: #2C3A4A;
+  --color-text-secondary: #5A6A7A;
+  --color-text-disabled: #9AABB8;
+  --color-primary: #548EB8;
+  --color-primary-light: #97AFCA;
+  --color-primary-dark: #4C7A91;
+  --color-primary-subtle: #BAC2D0;
+  --color-cta: #C66240;
+  --color-cta-subtle: #F0D4C6;
+  --color-success: #4A7A65;
+  --color-success-subtle: #C5D9D2;
+  --color-warning: #9A7845;
+  --color-warning-subtle: #E5D8BE;
+  --color-danger: #D28187;
+  --color-danger-subtle: #E9D7D5;
+  --color-info: #627787;
+  --color-info-subtle: #BAC2D0;
+  --shadow-1: 0 1px 3px rgba(44,58,74,0.12), 0 1px 2px rgba(44,58,74,0.08);
+  --shadow-2: 0 4px 8px rgba(44,58,74,0.12), 0 2px 4px rgba(44,58,74,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Quicksand', 'Noto Sans TC', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.layout { display: flex; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 24px 0;
+  z-index: 10;
+}
+
+.sidebar-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 20px 10px;
+  border-bottom: 1px solid var(--color-surface-low);
+  margin-bottom: 6px;
+}
+
+.sidebar-group {
+  padding: 12px 20px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-disabled);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.sidebar a {
+  display: block;
+  padding: 7px 20px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+
+.sidebar a:hover {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  border-left-color: var(--color-primary-light);
+}
+
+.sidebar a.active {
+  color: var(--color-primary-dark);
+  border-left-color: var(--color-primary);
+  background: var(--color-bg);
+  font-weight: 600;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 40px 48px;
+  max-width: 880px;
+}
+
+/* Doc header */
+.doc-header {
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--color-surface-low);
+}
+
+.doc-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.doc-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.doc-sub {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 14px;
+}
+
+.doc-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.meta-chip {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 9999px;
+}
+
+.meta-chip.blue { background: var(--color-primary-subtle); color: var(--color-primary-dark); }
+.meta-chip.green { background: var(--color-success-subtle); color: var(--color-success); }
+
+/* Task block separator */
+.task-block {
+  margin-bottom: 48px;
+}
+
+.task-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.task-num-badge {
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+}
+
+.task-num-badge.dark { background: var(--color-primary-dark); }
+
+.task-block-title {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.task-block-sub {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* Period card */
+.period-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.period-card {
+  background: var(--color-surface);
+  border-radius: 10px;
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+
+.period-card.full { grid-column: 1 / -1; }
+
+.period-header {
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.period-header.early { background: var(--color-primary-subtle); }
+.period-header.mid { background: var(--color-warning-subtle); }
+.period-header.late { background: var(--color-cta-subtle); }
+.period-header.other { background: var(--color-info-subtle); }
+.period-header.annual { background: var(--color-danger-subtle); }
+
+.period-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.period-header.early .period-dot { background: var(--color-primary); }
+.period-header.mid .period-dot { background: var(--color-warning); }
+.period-header.late .period-dot { background: var(--color-cta); }
+.period-header.other .period-dot { background: var(--color-info); }
+.period-header.annual .period-dot { background: var(--color-danger); }
+
+.period-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.period-body { padding: 12px 18px; }
+
+/* Checklist */
+.checklist { list-style: none; }
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--color-surface-low);
+}
+
+.checklist li:last-child { border-bottom: none; }
+
+.checklist input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-surface-low);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  position: relative;
+}
+
+.checklist input[type="checkbox"]:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checklist input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  width: 4px;
+  height: 8px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+/* Reset button */
+#reset-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: var(--color-cta);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Quicksand', 'Noto Sans TC', sans-serif;
+  cursor: pointer;
+  box-shadow: var(--shadow-2);
+  transition: background 0.15s, transform 0.1s;
+  z-index: 100;
+}
+#reset-btn:hover { background: #b05535; transform: scale(1.03); }
+#reset-btn:active { transform: scale(0.97); }
+
+.checklist li .item-wrap { flex: 1; }
+.item-note {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* Tag */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+.tag-danger { background: var(--color-danger-subtle); color: #7a3a40; }
+.tag-warning { background: var(--color-warning-subtle); color: #6b5030; }
+.tag-primary { background: var(--color-primary-subtle); color: var(--color-primary-dark); }
+.tag-success { background: var(--color-success-subtle); color: var(--color-success); }
+
+/* Finance links */
+.fin-link {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-success-subtle);
+  color: var(--color-success);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  margin-top: 4px;
+  margin-right: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+.fin-link:hover { background: var(--color-success); color: #fff; }
+
+/* Credit card table */
+.cc-section {
+  background: var(--color-surface);
+  border-radius: 10px;
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.cc-section-header {
+  padding: 10px 18px;
+  background: var(--color-primary-subtle);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cc-section-body { padding: 14px 18px; }
+
+.cc-links { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+
+.cc-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.cc-table th {
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  font-size: 11.5px;
+  text-align: left;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--color-surface-low);
+}
+.cc-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-surface-low);
+  vertical-align: top;
+}
+.cc-table tr:last-child td { border-bottom: none; }
+.cc-table tr:hover td { background: var(--color-bg); }
+
+/* Info box */
+.info-box {
+  background: var(--color-info-subtle);
+  border-left: 4px solid var(--color-info);
+  padding: 10px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-top: 14px;
+}
+
+.warn-box {
+  background: var(--color-warning-subtle);
+  border-left: 4px solid var(--color-warning);
+  padding: 10px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: #5a3a1a;
+  margin-top: 14px;
+}
+
+/* Divider between tasks */
+.task-divider {
+  height: 2px;
+  background: var(--color-surface-low);
+  margin: 40px 0;
+  border-radius: 1px;
+}
+
+/* ── Task 14 specific ── */
+.confirm-section {
+  background: var(--color-surface);
+  border-radius: 10px;
+  box-shadow: var(--shadow-1);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.confirm-header {
+  padding: 10px 18px;
+  background: var(--color-primary-subtle);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.confirm-body { padding: 12px 18px; }
+
+/* Page link cards */
+.page-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.page-card {
+  background: var(--color-surface);
+  border-radius: 8px;
+  box-shadow: var(--shadow-1);
+  padding: 14px 16px;
+  border-top: 3px solid var(--color-primary-light);
+}
+
+.page-card-name {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.page-card-desc {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+/* Execution flow */
+.exec-flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+
+.exec-step {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary-dark);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+}
+
+.exec-arrow {
+  color: var(--color-text-disabled);
+  font-size: 14px;
+  padding: 0 6px;
+}
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { padding: 24px 18px; }
+  .period-grid { grid-template-columns: 1fr; }
+  .page-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-title">TO DO 清單</div>
+
+  <div class="sidebar-group">設計部財務相關事項</div>
+  <a href="#t12-daily">日常</a>
+  <a href="#t12-annual">年度 / 季度 / 非定時</a>
+  <a href="#t12-monthly">月底 → 月初</a>
+  <a href="#t12-other">其他事項</a>
+  <a href="#t12-cc">信用卡相關頁面</a>
+  <a href="#t12-pages">所有對應頁面</a>
+
+  <div class="sidebar-group">量能票歸檔，與歸檔後任務</div>
+  <a href="#t14-checklist">歸檔檢查事項</a>
+  <a href="#t14-pages">所有對應頁面</a>
+</nav>
+
+<!-- Main -->
+<main class="main">
+  <div class="doc-header">
+    <div class="doc-title">財務與量能票歸檔 TO DO 與 Check List</div>
+    <div class="doc-sub">設計部每月定期執行的行政任務，數據需注意與營運資料相關</div>
+    <div class="doc-meta">
+      <span class="meta-chip blue">設計部財務相關事項</span>
+      <span class="meta-chip green">量能票歸檔，與歸檔後任務</span>
+    </div>
+  </div>
+
+  <!-- ══ TASK 12 ══ -->
+  <div class="task-block" id="task12">
+    <div class="task-label">
+      <div>
+        <div class="task-block-title">設計部財務相關事項</div>
+        <div class="task-block-sub">1. 設計部費用追蹤　2. 月度報帳確認與提醒　3. 信用卡申請，與相關文件更新 · 年度預算估算（根據 Jenny or 營運端需求提供與否）<br>4. 需人工續約的軟體與帳號提醒</div>
+      </div>
+    </div>
+
+    <div class="period-grid">
+
+      <!-- 日常 -->
+      <div class="period-card full" id="t12-daily">
+        <div class="period-header" style="background:var(--color-success-subtle);">
+          <div class="period-dot" style="background:var(--color-success);"></div>
+          <div class="period-name">日常</div>
+        </div>
+        <div class="period-body">
+          <ul class="checklist">
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                確認每位設計的 AI 訂閱，都有執行報帳
+                <div class="item-note">詳細對應日期，請查設計帳戶的資料庫
+                  <a class="fin-link" href="https://app.notion.com/p/alleypin/81edc324cdde4cb985ad8a54b876d085" target="_blank">設計帳戶資料庫</a>
+                </div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">回覆設計師報帳相關的問題，確保大家報帳正確</div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">確認刷卡紀錄的 N8N 正常運行，明確知道每月的花費項目</div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                知悉不同類別的刷卡，會是由哪位設計師負責，以及是誰刷的
+                <div class="item-note">故需要設計的大家刷卡前通知</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">確認這個月是否有大額扣款即將到來，提醒該進行續約的設計安排時間處理</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 年度 / 季度 / 非定時 -->
+      <div class="period-card full" id="t12-annual">
+        <div class="period-header annual">
+          <div class="period-dot"></div>
+          <div class="period-name">年度 / 季度 / 非定時</div>
+        </div>
+        <div class="period-body">
+          <ul class="checklist">
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">負責 Mobbie 的報帳，一季一次</div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                整理與更新設計帳戶資料庫的數據，盤點是否下一年度的月繳、年繳有哪些
+                <div class="item-note">
+                  <a class="fin-link" href="https://app.notion.com/p/alleypin/19dbf447adda802589dbd216cc6be71c" target="_blank">盤點頁面</a>
+                  ＊若有新的請從設計帳戶的資料庫串接新增過來，有一個「開設通知清單」按鈕可用
+                </div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                更新設計部部門信用卡資料，與文件
+                <div class="item-note">
+                  <a class="fin-link" href="https://app.notion.com/p/alleypin/1-233bf447adda802397c2cfd285ea4a9a" target="_blank">信用卡-1（印刷卡）</a>
+                  <a class="fin-link" href="https://app.notion.com/p/alleypin/3-Joy-28bbf447adda804db554cc02792d0e3e" target="_blank">信用卡-3（軟體卡）</a>
+                </div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                若信用卡進行更新，需修改信用卡刷卡紀錄的 N8N 與 Notion 資料庫
+                <div class="item-note">
+                  <a class="fin-link" href="https://app.notion.com/p/alleypin/29cbf447adda80e1b77aeb3e61db2b1a?v=29cbf447adda800498cb000c71fca532" target="_blank">信用卡刷卡紀錄資料庫</a>
+                  ＊數據是抓信用卡末四碼去分資料
+                </div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">設定訂閱服務的信，包含驗證碼、invoice 等關鍵字，轉發到部門信箱（design@alleypin.com），確保大家都能收到</div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                <strong>⚠️ 當信用卡進行更換時</strong>：提醒所有有刷該卡的設計師，修改訂閱服務的刷卡卡號，且請大家更新設計帳戶上的刷卡資料（key 刷卡別）
+                <div class="item-note">
+                  ＊讓 Jenny 能順利地把舊卡關掉<br><br>
+                  <strong>交接後 N8N 修改，以及追蹤額度的 Notion 資料庫裡的自動化：</strong><br><br>
+                  <a class="fin-link" href="https://alleypin.app.n8n.cloud/projects/b5EqPaKCAvaqmpJ5/workflows?search=刷卡" target="_blank">N8N 刷卡相關 Workflows</a><br>
+                  請改 email 的 trigger 為 Yaya 帳號，以及 if 節點的末四碼，需改為新的軟體卡；N8N 後面的 Slack 通知也需修改，請根據之後需要推播給誰來設定，傳送的帳號也請記得一併修改<br><br>
+                  <a class="fin-link" href="https://app.notion.com/p/alleypin/2a1bf447adda806cbf72f8e9c8a9cda1?v=2a1bf447adda80b8a41f000c5f06a6b2&source=copy_link" target="_blank">Notion 額度追蹤</a><br>
+                  ＊因權限被調整，目前無法看到，再麻煩 Yaya 自行研究與調整。此資料庫的自動化在於綁定對應的卡號頁面，進行費用剩餘額度的即時計算，目前自動化已停止，故金額非正確的。資料庫中，兩張信用卡額度需手動更新成：印刷卡 10 萬、軟體卡 20 萬
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 月底 → 月初 -->
+      <div class="period-card full" id="t12-monthly">
+        <div class="period-header early">
+          <div class="period-dot"></div>
+          <div class="period-name">月底 → 月初</div>
+        </div>
+        <div class="period-body">
+          <ul class="checklist">
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                檢查該月份有沒有誰忘記報帳，提醒報帳；手續費也要檢查是否有報帳到
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                若帳沒有報，或是有任何 Jenny 查帳發現有問題的部分，需協助處理，找到是誰報的帳，確保他這次報帳正確
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 其他事項 -->
+    <div class="cc-section" id="t12-other" style="margin-top:14px;">
+      <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">其他事項</div>
+      <div class="cc-section-body">
+        <ul class="checklist">
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              如果有刷卡後又退款，無論跨月或是沒有，Commeet 上都需要報帳兩次
+              <div class="item-note">第一次是刷卡金額，第二次是退款金額，皆需附上 invoice</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              通常手續費會晚 2–3 天，故建議設計師刷完卡後 2–3 天再報帳
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 信用卡相關所有頁面 -->
+    <div class="cc-section" id="t12-cc">
+      <div class="cc-section-header">信用卡相關所有頁面資訊，以及今年度需要重新申請的信用卡資料<span style="font-weight:400;font-size:11.5px;margin-left:8px;">下次申請時間為 2029 年</span></div>
+      <div class="cc-section-body">
+        <div class="cc-links">
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/2a1bf447adda80d782b7cc90e273c721" target="_blank">信用卡刷卡資料</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/Commeet-b1cc49a3ac874e8083c6825795e8533f" target="_blank">Commeet 報帳教學</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/Commeet-1dfbf447adda80e6a8e2f462e842e041" target="_blank">設計部門信用卡報帳帳號資料</a>
+          <a class="fin-link" href="https://alleypin.commeet.co/ap/login#" target="_blank">Commeet 報帳頁面</a>
+        </div>
+        <p style="font-size:12.5px;color:var(--color-cta);margin-bottom:14px;">部門信用卡請選 Commeet 帳號登入；個人帳款、代墊或補助申請，請用 Google 登入</p>
+
+        <div class="cc-section-header" style="background:var(--color-warning-subtle);color:#6b5030;border-radius:6px;margin-bottom:10px;">本次信用卡申請資料</div>
+        <p style="font-size:12.5px;color:var(--color-text-secondary);margin-bottom:10px;">請登入部門 Commeet 帳號進行信用卡申請，審核完成後會寄信到信箱，需提供末四碼與 CVV 資料給 Jenny 做後續財務資料卡片管理紀錄</p>
+        <table class="cc-table">
+          <thead>
+            <tr>
+              <th>卡片</th>
+              <th>額度</th>
+              <th>次數限制</th>
+              <th>到期日</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>印刷卡</strong></td>
+              <td>10 萬</td>
+              <td>無次數限制</td>
+              <td>07/29</td>
+            </tr>
+            <tr>
+              <td><strong>軟體卡</strong></td>
+              <td>20 萬</td>
+              <td>無次數限制</td>
+              <td>07/29</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="info-box" style="margin-top:10px;">以上資訊已與 Jenny 確認過，目前公司所有部門皆是所有卡片額度累積為 30 萬元</div>
+      </div>
+    </div>
+
+    <!-- 財務區所有對應頁面 -->
+    <div class="cc-section" id="t12-pages" style="margin-top:14px;">
+      <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">此區所有對應頁面</div>
+      <div class="cc-section-body">
+        <div class="cc-links">
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/81edc324cdde4cb985ad8a54b876d085" target="_blank">設計帳戶資料庫</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/19dbf447adda802589dbd216cc6be71c" target="_blank">盤點頁面</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/1-233bf447adda802397c2cfd285ea4a9a" target="_blank">信用卡-1（印刷卡）</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/3-Joy-28bbf447adda804db554cc02792d0e3e" target="_blank">信用卡-3（軟體卡）</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/29cbf447adda80e1b77aeb3e61db2b1a?v=29cbf447adda800498cb000c71fca532" target="_blank">信用卡刷卡紀錄資料庫</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/2a1bf447adda806cbf72f8e9c8a9cda1?v=2a1bf447adda80b8a41f000c5f06a6b2" target="_blank">Notion 額度追蹤</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/2a1bf447adda80d782b7cc90e273c721" target="_blank">信用卡刷卡資料</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/Commeet-b1cc49a3ac874e8083c6825795e8533f" target="_blank">Commeet 報帳教學</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/Commeet-1dfbf447adda80e6a8e2f462e842e041" target="_blank">設計部門信用卡報帳帳號資料</a>
+          <a class="fin-link" href="https://alleypin.commeet.co/ap/login#" target="_blank">Commeet 報帳頁面</a>
+          <a class="fin-link" href="https://alleypin.app.n8n.cloud/projects/b5EqPaKCAvaqmpJ5/workflows?search=刷卡" target="_blank">N8N 刷卡相關 Workflows</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Divider -->
+  <div class="task-divider"></div>
+
+  <!-- ══ TASK 14 ══ -->
+  <div class="task-block" id="task14">
+    <div class="task-label">
+      <div>
+        <div class="task-block-title">量能票歸檔，與歸檔後任務</div>
+        <div class="task-block-sub">
+          每月月底執行一次，提交數據給 Operation team 資料填寫區（請於每月 10 號前完成填寫）
+          <a class="fin-link" href="https://docs.google.com/spreadsheets/d/1qg_UQfgP17TN9NJHOKhE-ICjggl9gRueNDWJjH_N2eM/edit?gid=410664811#gid=410664811" target="_blank" style="margin-left:8px;">Operation team 填寫區</a>
+        </div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-bottom:16px;">若該月份的頁面沒開啟，請通知 Joy</div>
+
+    <!-- 量能票歸檔檢查事項 -->
+    <div class="confirm-section" id="t14-checklist">
+      <div class="confirm-header">
+        量能票歸檔檢查事項（每月）
+        <a class="fin-link" href="https://app.notion.com/p/alleypin/332e729d89af4ece8b6d35b0c0f062f3" target="_blank" style="margin-left:8px;">歸檔頁面</a>
+        <span style="font-size:11px;font-weight:400;color:var(--color-text-secondary);margin-left:6px;">＊每季需自行調整 Filter</span>
+      </div>
+      <div class="confirm-body">
+        <ul class="checklist">
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              檢查每張票是否都有填寫正確的 Department、StoryPoints、Weekly
+              <div class="item-note">票名是否可以知悉這票在做啥（營運有需要時會需要提供資訊確認）</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">針對填寫資料有缺的，提醒要補哪些資料</div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              刪除 DBC 最後沒開的空白量能票
+              <div class="item-note">週一設計開了量能票，最後顧問沒開，設計有時候會只刪到 DBC 開票中心，忘記量能票</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              Department 未填：若能辨別屬於哪個，可協助填；若無法請該設計師補齊；若填錯請告知正確為哪一個
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              票名注意事項：
+              <div class="item-note">
+                a. DBC 改圖，要註明是哪張圖<br>
+                b. 若是改多張圖，需註記改幾張<br>
+                c. 網站切版與網站視覺，需備注是哪一頁網站；若顧問本身就沒有填上（看 DBC 開票中心票名），需請顧問回頭補上
+              </div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">確認 DBC 票名與量能票是否相同</div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              任一部門的票的工作狀態是否變成 Completed，尤其是期限 or Weekly 已經非當周的
+              <div class="item-note">有任何狀況請 Tag 該設計師進行修改</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              行銷票若卡在 Keep Watching，但行銷票本身也尚未結案
+              <div class="item-note">需提醒設計先 Completed 後需有修改，請開修改票</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              執行會需要跨月份的，請提醒設計下個月重新開票
+              <div class="item-note">否則下個月數據不會計算到此任務</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              每張票檢查沒問題後，都需要填寫「本季工作佔比」
+              <div class="item-note">
+                本季工作佔比的頁面需於每一季新增，設定方式請詳見頁面上方
+                <a class="fin-link" href="https://app.notion.com/p/alleypin/e46538f679e34c88a263da521178106a" target="_blank">本季工作佔比頁面</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              每月確認完成之後，通知大家填寫營運需要的數據，請根據量能票的數據進行填寫
+              <div class="item-note">
+                <a class="fin-link" href="https://app.notion.com/p/alleypin/374bf447adda801ba735d5d11bfbe03c" target="_blank">查詢數據頁面</a>
+                ＊此頁 Filter 設定為當月；要提醒大家最後一個工作天填寫完成
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 量能票區所有對應頁面 -->
+    <div class="cc-section" id="t14-pages" style="margin-top:16px;">
+      <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">此區所有對應頁面</div>
+      <div class="cc-section-body">
+        <div class="cc-links">
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/332e729d89af4ece8b6d35b0c0f062f3" target="_blank">歸檔頁面</a>
+          <a class="fin-link" href="https://docs.google.com/spreadsheets/d/1qg_UQfgP17TN9NJHOKhE-ICjggl9gRueNDWJjH_N2eM/edit?gid=410664811#gid=410664811" target="_blank">Operation team 填寫區</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/e46538f679e34c88a263da521178106a" target="_blank">本季工作佔比頁面</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/374bf447adda801ba735d5d11bfbe03c" target="_blank">查詢數據頁面</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="height:40px;"></div>
+</main>
+</div>
+
+<button id="reset-btn" onclick="resetAll()" title="清除所有勾選">重置所有勾選</button>
+
+<script>
+const sections = document.querySelectorAll('[id]');
+const links = document.querySelectorAll('.sidebar a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 140) current = s.id;
+  });
+  links.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+});
+
+function resetAll() {
+  document.querySelectorAll('.checklist input[type="checkbox"]').forEach(cb => {
+    cb.checked = false;
+  });
+}
+</script>
+</body>
+</html>
