@@ -553,8 +553,12 @@ body {
     <div class="mobile-nav-group">實習生時數確認</div>
     <a href="#t2-checklist" onclick="closeNav()">時數確認事項</a>
     <a href="#t2-newintern" onclick="closeNav()">新實習生加入流程</a>
+    <a href="#t2-pages" onclick="closeNav()">所有對應頁面</a>
     <div class="mobile-nav-group">獎金制費用 Check List 與 To Do</div>
-    <a href="#t3-checklist" onclick="closeNav()">費用確認事項</a>
+    <a href="#t3-todo" onclick="closeNav()">季初 TO DO</a>
+    <a href="#t3-ticket-check" onclick="closeNav()">檢查票的細節確認</a>
+    <a href="#t3-notes" onclick="closeNav()">其他注意事項</a>
+    <a href="#t3-pages" onclick="closeNav()">所有對應頁面</a>
     <div class="mobile-nav-group">現階段使用中的 N8N</div>
     <a href="#t4-outsource" onclick="closeNav()">外包費用相關</a>
     <a href="#t4-design" onclick="closeNav()">設計部 / DBC 相關</a>
@@ -583,7 +587,10 @@ body {
   <a href="#t2-pages">所有對應頁面</a>
 
   <div class="sidebar-group">獎金制費用 Check List 與 To Do</div>
-  <a href="#t3-checklist">費用確認事項</a>
+  <a href="#t3-todo">季初 TO DO</a>
+  <a href="#t3-ticket-check">檢查票的細節確認</a>
+  <a href="#t3-notes">其他注意事項</a>
+  <a href="#t3-pages">所有對應頁面</a>
 
   <div class="sidebar-group">現階段使用中的 N8N</div>
   <a href="#t4-outsource">外包費用相關</a>
@@ -1048,7 +1055,7 @@ body {
 
     <div class="period-grid" id="t3-checklist">
 
-      <div class="period-card full">
+      <div class="period-card full" id="t3-todo">
         <div class="period-header mid">
           <div class="period-dot"></div>
           <div class="period-name">季初資料庫上的 TO DO</div>
@@ -1117,7 +1124,7 @@ body {
         </div>
       </div>
 
-      <div class="period-card full">
+      <div class="period-card full" id="t3-ticket-check">
         <div class="period-header late">
           <div class="period-dot"></div>
           <div class="period-name">檢查票的細節確認</div>
@@ -1164,7 +1171,7 @@ body {
     </div>
 
     <!-- 其他注意事項 -->
-    <div class="cc-section" style="margin-top:14px;">
+    <div class="cc-section" id="t3-notes" style="margin-top:14px;">
       <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">其他注意事項</div>
       <div class="cc-section-body" style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
         <ol style="padding-left:18px;display:flex;flex-direction:column;gap:14px;">
@@ -1183,7 +1190,7 @@ body {
     </div>
 
     <!-- 所有對應頁面 -->
-    <div class="cc-section" style="margin-top:14px;">
+    <div class="cc-section" id="t3-pages" style="margin-top:14px;">
       <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">此區所有對應頁面</div>
       <div class="cc-section-body">
         <div style="display:flex;flex-wrap:wrap;gap:6px;">
