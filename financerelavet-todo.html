@@ -630,7 +630,7 @@ body {
     <div class="task-label">
       <div>
         <div class="task-block-title">設計部財務相關事項</div>
-        <div class="task-block-sub">1. 設計部費用追蹤　2. 月度報帳確認與提醒　3. 信用卡申請，與相關文件更新<br>4. 年度預算估算（根據 Jenny or 營運端需求提供與否）5. 需人工續約的軟體與帳號提醒</div>
+        <div class="task-block-sub">1. 設計部費用追蹤　2. 月度報帳確認與提醒　3. 信用卡申請，與相關文件更新<br>4. 年度預算估算（根據 Jenny or 營運端需求提供與否）　5. 需人工續約的軟體與帳號提醒</div>
       </div>
     </div>
 
@@ -659,13 +659,9 @@ body {
             </li>
             <li>
               <input type="checkbox">
-              <div class="item-wrap">確認刷卡紀錄的 N8N 正常運行，明確知道每月的花費項目</div>
-            </li>
-            <li>
-              <input type="checkbox">
               <div class="item-wrap">
-                知悉不同類別的刷卡，每次的刷卡是由哪位設計師負責報帳，以及是誰刷的
-                <div class="item-note">故需要設計的大家刷卡前通知，且需要記得因盤 Commeet 時需要</div>
+                知悉不同類別的刷卡，會是由哪位設計師負責，以及是誰刷的
+                <div class="item-note">故需要設計的大家刷卡前通知</div>
               </div>
             </li>
             <li>
@@ -713,16 +709,6 @@ body {
             </li>
             <li>
               <input type="checkbox">
-              <div class="item-wrap">
-                若信用卡進行更新，需修改信用卡刷卡紀錄的 N8N 與 Notion 資料庫
-                <div class="item-note">
-                  <a class="fin-link" href="https://app.notion.com/p/alleypin/29cbf447adda80e1b77aeb3e61db2b1a?v=29cbf447adda800498cb000c71fca532" target="_blank">信用卡刷卡紀錄資料庫</a>
-                  ＊數據是抓信用卡末四碼去分資料
-                </div>
-              </div>
-            </li>
-            <li>
-              <input type="checkbox">
               <div class="item-wrap">設定訂閱服務的信，包含驗證碼、invoice 等關鍵字，轉發到部門信箱（design@alleypin.com），確保大家都能收到</div>
             </li>
             <li>
@@ -730,13 +716,7 @@ body {
               <div class="item-wrap">
                 <strong>⚠️ 當信用卡進行更換時</strong>：提醒所有有刷該卡的設計師，修改訂閱服務的刷卡卡號，且請大家更新設計帳戶上的刷卡資料（key 刷卡別）
                 <div class="item-note">
-                  ＊讓 Jenny 能順利地把舊卡關掉，所有刷卡資料，理論上都可以在設計帳戶的資料庫裡找到<br><br>
-                  <strong>交接後 N8N 修改，以及追蹤額度的 Notion 資料庫裡的自動化：</strong><br><br>
-                  <a class="fin-link" href="https://alleypin.app.n8n.cloud/projects/b5EqPaKCAvaqmpJ5/workflows?search=刷卡" target="_blank">N8N 刷卡相關 Workflows</a>
-                  <div style="line-height:1.85;margin-top:4px;margin-bottom:12px;">請改 email 的 trigger 為 Yaya 帳號，以及 if 節點的末四碼，需改為新的軟體卡；N8N 後面的 Slack 通知也需修改，請根據之後需要推播給誰來設定，傳送的帳號也請記得一併修改</div>
-                  <a class="fin-link" href="https://app.notion.com/p/alleypin/2a1bf447adda806cbf72f8e9c8a9cda1?v=2a1bf447adda80b8a41f000c5f06a6b2&source=copy_link" target="_blank">Notion 額度追蹤</a>
-                  <div style="line-height:1.85;margin-top:4px;margin-bottom:12px;">＊因權限被調整，目前無法看到，再麻煩 Yaya 自行研究與調整。此資料庫的自動化在於綁定對應的卡號頁面，進行費用剩餘額度的即時計算，目前自動化已停止，故金額非正確的。資料庫中，兩張信用卡額度需手動更新成：印刷卡 10 萬、軟體卡 20 萬</div>
-                  <div style="color:var(--color-cta);font-weight:600;font-size:12.5px;">請 Yaya 協助與支援於 06.10 之前完成自動化設定的更新與移轉，感謝</div>
+                  ＊讓 Jenny 能順利地把舊卡關掉，所有刷卡資料，理論上都可以在設計帳戶的資料庫裡找到
                 </div>
               </div>
             </li>
@@ -849,8 +829,6 @@ body {
           <span style="color:var(--color-text-disabled);font-size:13px;">→</span>
           <div style="background:var(--color-primary);color:#fff;font-size:12px;font-weight:600;padding:5px 14px;border-radius:8px;">更新信用卡-1 與信用卡-3 的所有文件資料</div>
           <span style="color:var(--color-text-disabled);font-size:13px;">→</span>
-          <div style="background:var(--color-primary);color:#fff;font-size:12px;font-weight:600;padding:5px 14px;border-radius:8px;">更新 N8N 與 Notion 自動化</div>
-          <span style="color:var(--color-text-disabled);font-size:13px;">→</span>
           <div style="background:var(--color-primary);color:#fff;font-size:12px;font-weight:600;padding:5px 14px;border-radius:8px;">通知所有設計師更換信用卡，與更新設計帳戶的資料庫資訊</div>
           <span style="color:var(--color-text-disabled);font-size:13px;">→</span>
           <div style="background:var(--color-success);color:#fff;font-size:12px;font-weight:600;padding:5px 14px;border-radius:8px;">所有人更新完後，通知 Jenny 之後可停卡</div>
@@ -860,7 +838,6 @@ body {
           <li><input type="checkbox"><div class="item-wrap">Commeet 申請信用卡</div></li>
           <li><input type="checkbox"><div class="item-wrap">拿到新的卡號（收信，一張卡有兩封）並將後四碼與 CVV 提供給 Jenny</div></li>
           <li><input type="checkbox"><div class="item-wrap">更新信用卡-1 與信用卡-3 的所有文件資料</div></li>
-          <li><input type="checkbox"><div class="item-wrap">更新 N8N 與 Notion 自動化</div></li>
           <li><input type="checkbox"><div class="item-wrap">通知所有設計師更換信用卡，與更新設計帳戶的資料庫資訊</div></li>
           <li><input type="checkbox"><div class="item-wrap">所有人更新完後，通知 Jenny 之後可停卡</div></li>
         </ul>
@@ -876,13 +853,10 @@ body {
           <a class="fin-link" href="https://app.notion.com/p/alleypin/19dbf447adda802589dbd216cc6be71c" target="_blank">盤點頁面</a>
           <a class="fin-link" href="https://app.notion.com/p/alleypin/1-233bf447adda802397c2cfd285ea4a9a" target="_blank">信用卡-1（印刷卡）</a>
           <a class="fin-link" href="https://app.notion.com/p/alleypin/3-Joy-28bbf447adda804db554cc02792d0e3e" target="_blank">信用卡-3（軟體卡）</a>
-          <a class="fin-link" href="https://app.notion.com/p/alleypin/29cbf447adda80e1b77aeb3e61db2b1a?v=29cbf447adda800498cb000c71fca532" target="_blank">信用卡刷卡紀錄資料庫</a>
-          <a class="fin-link" href="https://app.notion.com/p/alleypin/2a1bf447adda806cbf72f8e9c8a9cda1?v=2a1bf447adda80b8a41f000c5f06a6b2" target="_blank">Notion 額度追蹤</a>
           <a class="fin-link" href="https://app.notion.com/p/alleypin/2a1bf447adda80d782b7cc90e273c721" target="_blank">信用卡刷卡資料</a>
           <a class="fin-link" href="https://app.notion.com/p/alleypin/Commeet-b1cc49a3ac874e8083c6825795e8533f" target="_blank">Commeet 報帳教學</a>
           <a class="fin-link" href="https://app.notion.com/p/alleypin/Commeet-1dfbf447adda80e6a8e2f462e842e041" target="_blank">設計部門信用卡報帳帳號資料</a>
           <a class="fin-link" href="https://alleypin.commeet.co/ap/login#" target="_blank">Commeet 報帳頁面</a>
-          <a class="fin-link" href="https://alleypin.app.n8n.cloud/projects/b5EqPaKCAvaqmpJ5/workflows?search=刷卡" target="_blank">N8N 刷卡相關 Workflows</a>
         </div>
       </div>
     </div>
@@ -910,7 +884,7 @@ body {
           <a class="fin-link" href="https://docs.google.com/spreadsheets/d/1qg_UQfgP17TN9NJHOKhE-ICjggl9gRueNDWJjH_N2eM/edit?gid=410664811#gid=410664811" target="_blank" style="margin-left:6px;">Operation team 填寫區</a>
         </div>
         <div style="color:var(--color-cta);font-weight:600;border-top:1px solid #d4c9a8;padding-top:8px;margin-top:4px;line-height:1.85;">
-          數據填寫，之前都為 Joy 幫所有人進行填寫，未來的話，請 Yaya 自行決定執行方式<br>
+          數據填寫，之前都為 Joy 幫所有人進行填寫，未來的話，請 Yaya 自行決定執行方式，也於 6.5 (五) 進行告知與教學給設計師，6.8 (一) 設計周會時，也會再次告知，感謝雨彤協助設定未來的填寫通知的自動化<br>
           此份填寫表目前後續數據管理與檔案權限，已從 Jimmy 交接到 Joy 負責處理<br>
           <span style="color:var(--color-cta);font-weight:400;font-size:12px;">＊若該月份的頁面沒開啟，請通知 Joy</span>
         </div>
