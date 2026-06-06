@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>外包費用、實習生時數、獎金制相關 TO DO 與 Check List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #EDE8DF;
+  --color-surface: #F5F2EC;
+  --color-surface-low: #D9D3C7;
+  --color-text: #2C3A4A;
+  --color-text-secondary: #5A6A7A;
+  --color-text-disabled: #9AABB8;
+  --color-primary: #548EB8;
+  --color-primary-light: #97AFCA;
+  --color-primary-dark: #4C7A91;
+  --color-primary-subtle: #E5D9BE;
+  --color-cta: #C66240;
+  --color-cta-subtle: #F0D4C6;
+  --color-success: #4A7A65;
+  --color-success-subtle: #C5D9D2;
+  --color-warning: #9A7845;
+  --color-warning-subtle: #E5D8BE;
+  --color-danger: #D28187;
+  --color-danger-subtle: #E9D7D5;
+  --color-info: #627787;
+  --color-info-subtle: #BAC2D0;
+  --shadow-1: 0 1px 3px rgba(44,58,74,0.12), 0 1px 2px rgba(44,58,74,0.08);
+  --shadow-2: 0 4px 8px rgba(44,58,74,0.12), 0 2px 4px rgba(44,58,74,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Quicksand', 'Noto Sans TC', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.layout { display: flex; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 24px 0;
+  z-index: 10;
+}
+
+.sidebar-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 20px 10px;
+  border-bottom: 1px solid var(--color-surface-low);
+  margin-bottom: 6px;
+}
+
+.sidebar-group {
+  padding: 12px 20px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-disabled);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.sidebar a {
+  display: block;
+  padding: 7px 20px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+
+.sidebar a:hover {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  border-left-color: var(--color-primary-light);
+}
+
+.sidebar a.active {
+  color: var(--color-primary-dark);
+  border-left-color: var(--color-primary);
+  background: var(--color-bg);
+  font-weight: 600;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 40px 48px;
+  max-width: 880px;
+}
+
+/* Doc header */
+.doc-header {
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--color-surface-low);
+}
+
+.doc-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.doc-title {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.doc-sub {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 14px;
+}
+
+.doc-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.meta-chip {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 9999px;
+}
+
+.meta-chip.blue { background: var(--color-primary-subtle); color: #5a3a10; }
+.meta-chip.green { background: var(--color-success-subtle); color: var(--color-success); }
+.meta-chip.orange { background: var(--color-cta-subtle); color: var(--color-cta); }
+
+/* Task block */
+.task-block { margin-bottom: 48px; }
+
+.task-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.task-num-badge {
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+}
+
+.task-num-badge.dark { background: var(--color-primary-dark); }
+.task-num-badge.teal { background: #435E67; }
+.task-num-badge.warn { background: var(--color-warning); }
+
+.task-block-title {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+}
+
+.task-block-sub {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* Period card */
+.period-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.period-card {
+  background: var(--color-surface);
+  border-radius: 10px;
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+
+.period-card.full { grid-column: 1 / -1; }
+
+.period-header {
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.period-header.early { background: var(--color-primary-subtle); }
+.period-header.mid { background: var(--color-warning-subtle); }
+.period-header.late { background: var(--color-cta-subtle); }
+.period-header.success { background: var(--color-success-subtle); }
+.period-header.danger { background: var(--color-danger-subtle); }
+
+.period-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.period-header.early .period-dot { background: var(--color-primary); }
+.period-header.mid .period-dot { background: var(--color-warning); }
+.period-header.late .period-dot { background: var(--color-cta); }
+.period-header.success .period-dot { background: var(--color-success); }
+.period-header.danger .period-dot { background: var(--color-danger); }
+
+.period-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+}
+
+.period-body { padding: 12px 18px; }
+
+/* Checklist */
+.checklist { list-style: none; }
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--color-surface-low);
+}
+
+.checklist li:last-child { border-bottom: none; }
+
+.checklist input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-surface-low);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  position: relative;
+}
+
+.checklist input[type="checkbox"]:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checklist input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  width: 4px;
+  height: 8px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.checklist li .item-wrap { flex: 1; }
+.item-note {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* Tag */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+.tag-danger { background: var(--color-danger-subtle); color: #7a3a40; }
+.tag-warning { background: var(--color-warning-subtle); color: #6b5030; }
+.tag-primary { background: var(--color-primary-subtle); color: #5a3a10; }
+.tag-success { background: var(--color-success-subtle); color: var(--color-success); }
+
+/* Links */
+.fin-link {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-success-subtle);
+  color: var(--color-success);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  margin-top: 4px;
+  margin-right: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+.fin-link:hover { background: var(--color-success); color: #fff; }
+
+/* CC section */
+.cc-section {
+  background: var(--color-surface);
+  border-radius: 10px;
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.cc-section-header {
+  padding: 10px 18px;
+  background: var(--color-primary-subtle);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #5a3a10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cc-section-body { padding: 14px 18px; }
+
+/* Confirm section */
+.confirm-section {
+  background: var(--color-surface);
+  border-radius: 10px;
+  box-shadow: var(--shadow-1);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.confirm-header {
+  padding: 10px 18px;
+  background: var(--color-primary-subtle);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #5a3a10;
+}
+
+.confirm-body { padding: 12px 18px; }
+
+/* Info / warn box */
+.info-box {
+  background: var(--color-info-subtle);
+  border-left: 4px solid var(--color-info);
+  padding: 10px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-top: 14px;
+}
+
+.warn-box {
+  background: var(--color-danger-subtle);
+  border-left: 4px solid var(--color-danger);
+  padding: 10px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: #7a3a40;
+  margin-top: 14px;
+  line-height: 1.8;
+}
+
+/* Table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th {
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  font-size: 11.5px;
+  text-align: left;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--color-surface-low);
+}
+.data-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-surface-low);
+  vertical-align: top;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--color-bg); }
+
+/* Divider */
+.task-divider {
+  height: 2px;
+  background: var(--color-surface-low);
+  margin: 40px 0;
+  border-radius: 1px;
+}
+
+/* Reset button */
+#reset-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: var(--color-cta);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Quicksand', 'Noto Sans TC', sans-serif;
+  cursor: pointer;
+  box-shadow: var(--shadow-2);
+  transition: background 0.15s, transform 0.1s;
+  z-index: 100;
+}
+#reset-btn:hover { background: #b05535; transform: scale(1.03); }
+#reset-btn:active { transform: scale(0.97); }
+
+/* Workflow group */
+.wf-group { margin-bottom: 16px; }
+.wf-group-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #5a3a10;
+  background: var(--color-primary-subtle);
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  display: inline-block;
+  letter-spacing: 0.05em;
+}
+
+/* Mobile nav */
+.mobile-nav {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+}
+.mobile-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+}
+.mobile-nav-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.mobile-nav-btn {
+  background: var(--color-primary-subtle);
+  color: #5a3a10;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.mobile-nav-drawer {
+  display: none;
+  flex-direction: column;
+  padding: 4px 0 12px;
+  border-top: 1px solid var(--color-surface-low);
+}
+.mobile-nav-drawer.open { display: flex; }
+.mobile-nav-group {
+  padding: 10px 20px 2px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-disabled);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.mobile-nav-drawer a {
+  padding: 9px 20px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+}
+.mobile-nav-drawer a:hover {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  border-left-color: var(--color-primary-light);
+}
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .mobile-nav { display: block; }
+  .main { padding: 24px 18px; }
+  .period-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav">
+  <div class="mobile-nav-bar">
+    <span class="mobile-nav-title">外包費用 / 實習生 / 獎金制</span>
+    <button class="mobile-nav-btn" onclick="toggleNav()" aria-label="目錄">
+      <span style="display:flex;flex-direction:column;gap:4px;width:18px;">
+        <span style="display:block;height:2px;background:currentColor;border-radius:1px;"></span>
+        <span style="display:block;height:2px;background:currentColor;border-radius:1px;"></span>
+        <span style="display:block;height:2px;background:currentColor;border-radius:1px;"></span>
+      </span>
+    </button>
+  </div>
+  <div class="mobile-nav-drawer" id="mobileDrawer">
+    <div class="mobile-nav-group">外包設計師合作與費用確認</div>
+    <a href="#t1-pagestructure" onclick="closeNav()">頁面結構說明</a>
+    <a href="#t1-early" onclick="closeNav()">24 號前｜交付完整性確認</a>
+    <a href="#t1-mid" onclick="closeNav()">24–25 號｜人工審核</a>
+    <a href="#t1-late" onclick="closeNav()">26–29 號｜費用確認信發送</a>
+    <a href="#t1-payday" onclick="closeNav()">隔月 25 號｜HR 撥款與歸檔</a>
+    <a href="#t1-handover" onclick="closeNav()">06.15 前 N8N 自動化調整</a>
+    <a href="#t1-roster" onclick="closeNav()">其他注意事項</a>
+    <a href="#t1-pages" onclick="closeNav()">所有對應頁面</a>
+    <div class="mobile-nav-group">實習生時數確認</div>
+    <a href="#t2-checklist" onclick="closeNav()">時數確認事項</a>
+    <a href="#t2-newintern" onclick="closeNav()">新實習生加入流程</a>
+    <div class="mobile-nav-group">獎金制費用 Check List 與 To Do</div>
+    <a href="#t3-checklist" onclick="closeNav()">費用確認事項</a>
+    <div class="mobile-nav-group">現階段使用中的 N8N</div>
+    <a href="#t4-outsource" onclick="closeNav()">外包費用相關</a>
+    <a href="#t4-design" onclick="closeNav()">設計部 / DBC 相關</a>
+  </div>
+</div>
+
+<div class="layout">
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-title">TO DO 清單</div>
+
+  <div class="sidebar-group">外包設計師合作與費用確認</div>
+  <a href="#t1-pagestructure">頁面結構說明</a>
+  <a href="#t1-early">24 號前｜交付完整性確認</a>
+  <a href="#t1-mid">24–25 號｜人工審核</a>
+  <a href="#t1-late">26–29 號｜費用確認信發送</a>
+  <a href="#t1-payday">隔月 25 號｜HR 撥款與歸檔</a>
+  <a href="#t1-handover">06.15 前 N8N 自動化調整</a>
+  <a href="#t1-roster">其他注意事項</a>
+  <a href="#t1-pages">所有對應頁面</a>
+
+  <div class="sidebar-group">實習生時數確認</div>
+  <a href="#t2-checklist">時數確認事項</a>
+  <a href="#t2-newintern">新實習生加入流程</a>
+  <a href="#t2-pages">所有對應頁面</a>
+
+  <div class="sidebar-group">獎金制費用 Check List 與 To Do</div>
+  <a href="#t3-checklist">費用確認事項</a>
+
+  <div class="sidebar-group">現階段使用中的 N8N</div>
+  <a href="#t4-outsource">外包費用相關</a>
+  <a href="#t4-design">設計部 / DBC 相關</a>
+  <a href="#t4-claude-tips">用 Claude 改／寫 N8N</a>
+</nav>
+
+<!-- Main -->
+<main class="main">
+  <div class="doc-header">
+    <div class="doc-title">外包費用、實習生時數、獎金制相關的 TO DO 與 Check List</div>
+    <div class="doc-sub">設計部外包費用結算、實習生時數追蹤、獎金制確認，以及現行 N8N 自動化總覽</div>
+    <div class="doc-meta">
+      <span class="meta-chip blue">外包設計師合作與費用確認</span>
+      <span class="meta-chip blue">實習生時數確認</span>
+      <span class="meta-chip orange">獎金制費用 Check List 與 To Do</span>
+      <span class="meta-chip green">現階段使用中的 N8N</span>
+    </div>
+  </div>
+
+  <!-- ══ TASK 1：外包設計師合作與費用確認 ══ -->
+  <div class="task-block" id="task1">
+    <div class="task-label">
+      <div>
+        <div class="task-block-title">外包設計師合作與費用確認</div>
+        <div class="task-block-sub">每月 24–29 號為費用確認核心作業週，其餘時間為日常追蹤<br>合作設計師：Chelsea、Yoyo、Jocelyn、Mia（四位固定）</div>
+        <div style="margin-top:8px;">
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/List-21fbf447adda808988bfcbd5507df986" target="_blank">外包人員資料與數據一覽</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 頁面結構說明 -->
+    <div class="cc-section" id="t1-pagestructure" style="margin-bottom:24px;">
+      <div class="cc-section-header" style="background:var(--color-info-subtle);color:var(--color-info);">頁面結構說明｜外包人員資料與數據一覽</div>
+      <div class="cc-section-body">
+        <div class="wf-group">
+          <div class="wf-group-title">外包設計相關 To Do</div>
+          <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+            「新加入外包設計，上機確認要合作的整個流程」——點進此項目可展開查看完整流程步驟，裡面詳列加入前的必要確認事項。
+          </div>
+        </div>
+        <div class="wf-group" style="margin-top:12px;">
+          <div class="wf-group-title">外包設計人員清單</div>
+          <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+            欄位依序為：開始合作日期、合作狀態、外包人員名字與帳號、聯絡方式、費用顯示頁面、目前專案數、可接票數<br>
+            ＊後段重複的欄位為綁定自動化用，非手動填寫資料<br>
+            <span style="color:var(--color-cta);font-weight:600;">⚠️ 自動化說明：有人加入並填寫完資料後，系統會自動寄信通知對方「已完成填寫」。<br>
+            → 請與 Yaya 確認信件由誰名義發出，並將信件內容的名字對應修改；記得週一確認是否已幫你開好對應的 Notion 權限。</span>
+          </div>
+        </div>
+        <div class="wf-group" style="margin-top:12px;">
+          <div class="wf-group-title">外包人員該月費用統計</div>
+          <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+            基本上全自動化，平常不需要動。只需注意：<strong style="color:var(--color-text);">27 號 10:00 前，「需更新費用」這一排不能有 ⚠️</strong>，若有請先排查。
+          </div>
+        </div>
+        <div class="wf-group" style="margin-top:12px;">
+          <div class="wf-group-title">外包設計師每期費用紀錄</div>
+          <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+            會把上方費用統計拆分成每月打進來，未來如果要查閱外包設計成本可以在這查，沒事不用動他，27 號確認他有新增新的一個月的，就好。
+          </div>
+        </div>
+        <div class="wf-group" style="margin-top:12px;">
+          <div class="wf-group-title">檢查區</div>
+          <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+            方便對照兩個資料庫用，也可用來檢查外包設計師有沒有缺資料、顧問有沒有忘記打勾、或是有沒有沒開的票。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 每月費用確認節點 -->
+    <div class="period-grid" id="t1-monthly">
+
+      <div class="period-card full" id="t1-early">
+        <div class="period-header early">
+          <div class="period-dot"></div>
+          <div class="period-name">24 號前｜交付完整性確認</div>
+        </div>
+        <div class="period-body">
+          <ul class="checklist">
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                每週確認顧問是否都有打勾「已開好票」
+                <div class="item-note">顧問未打勾，外包設計師即無法進行費用資料的填寫，需手動幫顧問按一下；Tillna 為重點觀察顧問</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                每週須注意顧問是否有晚開卡，或是未開卡的問題
+                <div class="item-note">＊此項特別注意：揚善專案，與尊悅（小樹與 Maggie）</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                Mia 和 Chelsea 的空白票需要協助開立，請善用快速空白票生成器工具執行
+                <div class="item-note">
+                  Mia 固定每天兩張，Chelsea 固定每天四張；若需調整或有請假，外包設計師會提前告知，請同步告知顧問進行排程上的安排<br>
+                  <a class="fin-link" href="https://jouyuchen.github.io/dbc-ticket-generator/" target="_blank">快速空白票生成器工具</a><br>
+                  <span style="color:var(--color-text-secondary);">＊PS：改為由我們這邊手動開票的原因——這兩位之前滿常忘記自行開票，導致需要來回對話確認才能處理，流程很麻煩。後來與外包設計師協商，改成直接由負責人根據他們告知的數量統一開立，省去來回溝通的成本。<br>若想要調整，再麻煩與外包設計師溝通了，感謝。</span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                確認四位外包設計師（Chelsea、Yoyo、Jocelyn、Mia）已上傳 Final 圖、填寫圖數
+                <div class="item-note">自動化：n8n Design Fee-00 會於 24 號 16:00 自動執行完整性檢查，有缺漏會自動通知設計部補件。通知信會按案子分群，需自己對應記得是誰的案子；若未來想優化，可在 n8n 加轉譯 code 把案子名換成人名，但之後有新外包設計師加入就要更新 code，可嘗試，但沒很推薦。</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                確認有缺漏的設計師，需請他們於 25 號 16:00 前完成補件
+                <div class="item-note">若沒有補件，請告知該外包設計師：此張票的款項將延到下一期，並手動更改該票上的時間期限</div>
+                <div class="item-note" style="background:var(--color-danger-subtle);border-left:3px solid var(--color-danger);padding:6px 10px;border-radius:0 6px 6px 0;margin-top:6px;color:#7a3a40;">⚠️ 這一點一定要留言告知，且手動更改票上的日期。之前有發生過外包設計師問：怎麼確認被延期的票有沒有被算到——留言與改日期是讓對方可以追蹤的依據。</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="period-card full" id="t1-mid">
+        <div class="period-header mid">
+          <div class="period-dot"></div>
+          <div class="period-name">24–25 號｜人工審核</div>
+        </div>
+        <div class="period-body">
+          <ul class="checklist">
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                人工逐一審核各設計師交付合理性——判斷「實質交付」而非只確認欄位是否填寫
+                <div class="item-note">
+                  需判斷圖數、任務性質與費用是否相符；有疑義請個別確認<br>
+                  ＊寰宇、尊悅有同圖，僅需換診所標籤，第二張為 0.4 張票計算<br>
+                  　寰宇 為 1.4（2 張圖）／尊悅 為 1.8（3 張圖）<br>
+                </div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                檢查每一項都有費用，且與 DBC 開票中心串連，沒有的話會有 ⚠️
+                <div class="item-note">
+                  若有重複的或是沒有與 DBC 開票中心串連的，先確認設計師有沒有在這欄上傳圖和填資料：<br>
+                  ・有的話，要找到對應的那張 DBC 票，重新串接起來<br>
+                  ・沒有的話，就請移除（就大膽刪掉）<br><br>
+                  ＊若有串聯但費用金額缺失，請先確認是否是 DBC 開票中心的圖文類型有缺漏（Tillna 常常忘記填）<br>
+                  ＊會有這個問題，是因為顧問那邊可能按了兩次「開好票」，導致被觸發兩次
+                </div>
+                <div class="item-note" style="margin-top:8px;">
+                  <div style="font-weight:600;color:var(--color-text);margin-bottom:4px;">對不上的可能情境：</div>
+                  <div style="margin-bottom:4px;"><span class="tag tag-primary">情境一</span> 有些是上個月 25 號的票，故延期到這個月計算 → 確認 DBC 開票製作日期是否為上個月 25 號前（含 25）</div>
+                  <div style="margin-bottom:4px;"><span class="tag tag-primary">情境二</span> 上個月外包設計來不及上傳，延期到這個月 → 確認 DBC 開票製作日期是否為上個月 25 號前（含 25）</div>
+                  <div style="margin-bottom:8px;"><span class="tag tag-warning">情境三</span> 顧問不知何故觸發兩次計算票——這種情況資料庫上會顯示 ⚠️ 需確認</div>
+                  <div style="background:var(--color-warning-subtle);border-left:3px solid var(--color-warning);padding:6px 10px;border-radius:0 6px 6px 0;color:#6b5030;">💰 如果左邊資料庫的「🚨 需確認的票」出現 💰，請優先確認這張票的圖文類型是否未填——沒填要回 DBC 開票中心那邊補填</div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="period-card full" id="t1-late">
+        <div class="period-header late">
+          <div class="period-dot"></div>
+          <div class="period-name">26–29 號｜費用確認信發送與追蹤</div>
+        </div>
+        <div class="period-body">
+          <ul class="checklist">
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                26 號：N8N auto update Design fees 將會帶入更新費用到資料庫
+                <div class="item-note">＊金額是否正確，需於 26 號之前確認好；N8N 執行完成後會寄一封信，包含此月份要提交每位設計師的金額<br>
+                N8N 自動化綁的是日期，就算假日也會照常執行、照常收到信，目前是會同步寄給 Yaya，請再與 Yaya 討論從這開始往下的任務，是否需要調整收件與確認者</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                27 號早上 10:00 會收到一封 N8N Fee-01 的費用彙總信，需確認費用是否正確，確認無誤後按下 Approve，才會寄送給設計師
+                <div class="item-note">＊系統會自己抓外包設計人員清單裡的聯絡 email 寄出；若某位設計師本期費用為 0，已設定為不發信給對方，所以之後就算有設計師不再合作、沒有及時更新上面的清單，也不會發生意外寄信的情況<br>
+                ＊同樣建議 Pass 給 Yaya 收——因為這封也可能落在假日，收到後需核對 26 號給的數字是否一致</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                29 號前：確認四位設計師皆已回覆費用確認信
+                <div class="item-note">＊若設計師有回信確認，會收到通知信；若沒有，請聯繫設計師確認</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="period-card full" id="t1-payday">
+        <div class="period-header success">
+          <div class="period-dot"></div>
+          <div class="period-name">隔月 25 號｜HR 撥款與歸檔</div>
+        </div>
+        <div class="period-body">
+          <ul class="checklist">
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                HR 根據費用資料庫數據撥款，不需額外通知
+                <div class="item-note">＊外包設計師如果說沒收到錢，再和 Yaya 反應，請他跟 HR 確認</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                確認 n8n Design Fees-04 已自動標記「費用已結」，當月資料已封存
+                <div class="item-note">25 號自動執行，無需手動操作。這個設定是為了讓外包設計師可以自行查詢哪些款項已撥款——是建立信任關係而存在的機制。</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 06.15 前需調整的 N8N 自動化部分 -->
+    <div class="confirm-section" id="t1-handover">
+      <div class="confirm-header" style="background:var(--color-cta);color:#fff;letter-spacing:0.05em;">
+        06.15 前需調整的 N8N 自動化部分
+      </div>
+      <div class="confirm-body">
+        <div style="font-size:13px;font-weight:600;color:var(--color-text);margin-bottom:4px;">更新 n8n Gmail OAuth credentials — 以下 Workflows 皆需替換綁定帳號，以及信件的內容，麻煩負責人自行調整信件內容</div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:12px;">＊N8N 中的 Notion 節點，建議之後熟悉 N8N 後更換成負責人個人的。所有編輯權限已同時開給哲均和 Yaya，請哲均再跟 Yaya 討論：信件發出是用誰的名義、收信確認的應該是誰。</div>
+        <ul class="checklist">
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              Design fees -00（確認外包設計師填寫資料）｜24 號 16:00 通知
+              <div class="item-note"><a class="fin-link" href="https://alleypin.app.n8n.cloud/workflow/Obgxay0BiCaFuwFJ" target="_blank">開啟 Workflow</a> ＊第一階段需改：最後收信與發信的 email 是誰 → 用途：自動掃有沒有人少傳圖或資料未填</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              auto update Design fees for this month｜26 號 14:00
+              <div class="item-note"><a class="fin-link" href="https://alleypin.app.n8n.cloud/workflow/Gf09Wa8vLIk1zqo1" target="_blank">開啟 Workflow</a> ＊第一階段需改：最後收信與發信的 email 是誰 → 用途：更新「外包人員該月費用統計」資料庫裡的本期費用，完成後會寄信列出每位設計師的費用金額，供接續 27 號發款用</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              Design Fees - 01 new（外包設計費用確認）｜27 號早上 10:00 寄送
+              <div class="item-note"><a class="fin-link" href="https://alleypin.app.n8n.cloud/workflow/sAgtzDlsn6O6qzEB" target="_blank">開啟 Workflow</a> ＊第一階段需改：收信與發信的 email 是誰 → 收信的人需按 Approve，才會進入下一階段寄給外包設計師確認信</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              Designer payment confirm（sub）
+              <div class="item-note"><a class="fin-link" href="https://alleypin.app.n8n.cloud/workflow/o3Bekz7xjyas4P6H" target="_blank">開啟 Workflow</a> ＊第一階段需改：發信的 email 是誰 → 用途：逐一寄給外包設計師費用確認信；設計師回覆後會發通知信告知已回覆，再發信給設計師說已收到回覆</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              Design fees - 04（資料庫注記費用已結）｜25 號早上注記
+              <div class="item-note"><a class="fin-link" href="https://alleypin.app.n8n.cloud/workflow/lf1VvsvyVA1kne2l" target="_blank">開啟 Workflow</a> ＊第一階段需改：收信與發信的 email 是誰 → 這支只是完成後寄信告知打勾完成，無其他動作</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 其他注意事項 -->
+    <div class="cc-section" id="t1-roster">
+      <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">其他注意事項</div>
+      <div class="cc-section-body" style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+        <div style="margin-bottom:12px;">
+          <div style="font-weight:600;color:var(--color-text);margin-bottom:4px;">外包人員資料與數據一覽
+            <a class="fin-link" href="https://app.notion.com/p/alleypin/List-21fbf447adda808988bfcbd5507df986" target="_blank" style="margin-left:6px;">開啟頁面</a>
+          </div>
+          ＊若有新的外包設計師加入，請詳看此頁面上方的 To Do 與確認合作之後的流程<br>
+          ＊未來若需要招新的外包設計師，需請對方實作，以確認是否合適加入；題目請找顧問協作提供。外包設計師出圖後，需與出題的顧問討論哪些需修改，以及此人是否合適。
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font-weight:600;color:var(--color-text);margin-bottom:4px;">快速空白票生成器工具
+            <a class="fin-link" href="https://jouyuchen.github.io/dbc-ticket-generator/" target="_blank" style="margin-left:6px;">開啟工具</a>
+          </div>
+          <span style="color:var(--color-cta);font-weight:600;">＊此頁面架設於 Joy 個人的 GitHub，每年需更新 HTML；此需求當初由 Fish 提出，故之後會 Pass 給 Fish 為主要負責</span>
+        </div>
+
+        <!-- 若有案子要轉移 -->
+        <div style="margin-bottom:20px;">
+          <div style="font-weight:600;color:var(--color-text);margin-bottom:8px;"><span style="display:inline-block;background:var(--color-primary);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:9999px;margin-right:7px;">1</span>若有案子要轉移給外包設計師</div>
+          <ol style="padding-left:18px;display:flex;flex-direction:column;gap:6px;">
+            <li>先確認外包設計師可接的票數是否還夠，與顧問協商確認是否可以給外包，判斷並決定找哪位設計師（要有備選一）</li>
+            <li>聯絡想找的外包設計師，確認取得同意（需提供何時開始的日期，以及專案大致的風格，讓設計師判斷）；同時請原設計確認 Guideline 是否已更新成最新<br>
+              <span style="color:var(--color-cta);font-weight:600;">＊顧問須知悉：設計師的工作時間與大家的上班時間不同，圖會是隔天拿到。Chelsea 部分有與合作顧問協商過，可能需要等 2–3 個工作天。</span>
+            </li>
+            <li>設計師答應後，請至 <a class="fin-link" href="https://app.notion.com/p/alleypin/36a02500ad7947399aa6f117fafe99a2" target="_blank">設計外包相關資料</a>，找到對應外包設計師的名字頁面，把雲端與專案 Guideline 連接放上去；記得確認已開好對應的 Notion 權限給外包設計師</li>
+            <li>確認好設計師後，通知顧問設計師為誰，包含開始日期</li>
+            <li>更新上方「外包設計師清單 List」後面的負責專案</li>
+            <li>後續仍需持續追蹤外包設計師與顧問合作情況，若有狀況需及時介入。曾發生過的情境：顧問雖同意外包工作時間對不上，但自己開卡不夠仔細，需把案子拉回來換；或顧問對圖不滿意需多次來回修改，最終影響原定排程。</li>
+          </ol>
+        </div>
+
+        <!-- 支援急迫改圖 -->
+        <div style="margin-bottom:20px;">
+          <div style="font-weight:600;color:var(--color-text);margin-bottom:8px;"><span style="display:inline-block;background:var(--color-primary);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:9999px;margin-right:7px;">2</span>支援比較急迫的外包設計圖改圖</div>
+          <ol style="padding-left:18px;display:flex;flex-direction:column;gap:6px;">
+            <li>外包設計師改圖需再等一天，較急迫的顧問會請求支援，目前頻率約每週 1–2 次。相對常有需求的顧問：陳坤志、大欣、孫季農、佑紘<br>
+              <span style="color:var(--color-text-secondary);">＊佑紘的部分一半掛在 Fish 身上執行，這種情境下顧問會 tag 負責窗口跟 Fish，請再跟 Fish 協商這張誰處理</span>
+            </li>
+            <li>偶爾有需重做圖的情況，主要是大欣（倪志偉醫師）的部分，文郁會主動提出；已跟 Fish 商量好請他協助。新轉出去的理仁部分，也已與 Fish 協商好，會協助支援改圖。</li>
+            <li>若外包設計師沒有上傳 AI 檔但需要改圖：請告知顧問。很急的話要想辦法解決；還有點時間可以等的話，如實告知顧問沒有 AI 檔，詢問能不能等請外包設計師自己處理</li>
+          </ol>
+        </div>
+
+        <!-- 外包設計師請假 -->
+        <div style="margin-bottom:20px;">
+          <div style="font-weight:600;color:var(--color-text);margin-bottom:8px;"><span style="display:inline-block;background:var(--color-primary);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:9999px;margin-right:7px;">3</span>外包設計師請假</div>
+          <ol style="padding-left:18px;display:flex;flex-direction:column;gap:6px;">
+            <li>收到外包設計師請假通知後，記得確認那些日期不要開空白票</li>
+            <li>告知顧問外包設計師請假的時間，請顧問提前安排</li>
+          </ol>
+        </div>
+
+        <!-- 四位外包設計師注意事項 -->
+        <div>
+          <div style="font-weight:600;color:var(--color-text);margin-bottom:8px;"><span style="display:inline-block;background:var(--color-primary);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:9999px;margin-right:7px;">4</span>四位外包設計師個別注意事項</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:var(--color-bg);border-radius:8px;padding:10px 14px;">
+              <span style="font-weight:700;color:var(--color-text);">Mia</span>
+              <span style="font-size:12px;color:var(--color-text-secondary);margin-left:6px;">算是認真、出圖品質比較穩定的，但可接數量也最少；是 77 的朋友。每天兩張，需協助開空白票。</span>
+            </div>
+            <div style="background:var(--color-bg);border-radius:8px;padding:10px 14px;">
+              <span style="font-weight:700;color:var(--color-text);">Jocelyn</span>
+              <span style="font-size:12px;color:var(--color-text-secondary);margin-left:6px;">跟 Tillna 合作順利；未來有案子要轉，建議優先考慮 Tillna、Loui 的，是 Loui 的朋友。空白票讓顧問自己跟他喬，不用特別處理跟注意。偶爾會用 AI 生成素材，比較容易忘記上傳，需提醒。</span>
+            </div>
+            <div style="background:var(--color-bg);border-radius:8px;padding:10px 14px;">
+              <span style="font-weight:700;color:var(--color-text);">Chelsea</span>
+              <span style="font-size:12px;color:var(--color-text-secondary);margin-left:6px;">透過 Kevin 牽線，人有禮貌，但出圖品質可能沒前兩位穩。會需要支援下載 Freepik 付費素材（通常是東尼指定）；有些素材他會用 AI 生成，比較容易忘記上傳，需提醒。每天四張，需協助開空白票。</span>
+            </div>
+            <div style="background:var(--color-bg);border-radius:8px;padding:10px 14px;">
+              <span style="font-weight:700;color:var(--color-text);">Yoyo</span>
+              <span style="font-size:12px;color:var(--color-text-secondary);margin-left:6px;">公司 CS 的外包設計師，目前主要做許明翰而已。人滿好的，但滿常需要提醒上傳，通常是因為顧問一直沒確認、無法上傳。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 所有對應頁面 -->
+    <div class="cc-section" id="t1-pages">
+      <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">此區所有對應頁面</div>
+      <div class="cc-section-body">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/List-21fbf447adda808988bfcbd5507df986" target="_blank">外包人員資料與數據一覽</a>
+          <a class="fin-link" href="https://alleypin.app.n8n.cloud/projects/b5EqPaKCAvaqmpJ5/workflows" target="_blank">N8N 外包費用相關 Workflows</a>
+          <a class="fin-link" href="https://jouyuchen.github.io/dbc-ticket-generator/" target="_blank">空白票生成器畫面</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="task-divider"></div>
+
+  <!-- ══ TASK 2：實習生時數確認 ══ -->
+  <div class="task-block" id="task2">
+    <div class="task-label">
+      <div>
+        <div class="task-block-title">實習生時數確認</div>
+      </div>
+    </div>
+
+    <!-- 時數確認事項 -->
+    <div class="confirm-section" id="t2-checklist">
+      <div class="confirm-header" style="background:var(--color-primary);color:#fff;letter-spacing:0.05em;">
+        時數確認事項
+        <span style="background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:9999px;margin-left:10px;letter-spacing:0.05em;">每月 25 日執行，遇週末提早！</span>
+      </div>
+      <div class="confirm-body">
+        <ul class="checklist">
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              確認實習生當月實際出勤時數，一天 8hr
+              <div class="item-note">不知為何常會發生實習生自己算錯時數；如果有請假，請他們備註上去。<br>
+              ＊建議 Pass 給 Yaya，因為他是最後審核的人</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              確認時數填寫無誤，以及格式有照規範填（規範就在填寫頁面上方），並通知 Yaya 進行審核
+              <div class="item-note">＊如果上一項 Pass 給 Yaya，這項也一起推薦都 Pass 給他<br>
+              ＊25 號是切點：例如這一期是 25（一）–29（五），25（一）的時數票開在這個月，26（二）–29（五）是下個月的</div>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox">
+            <div class="item-wrap">
+              25 號檢查完之後，會進 Yaya 的審核頁面，幫他把資料庫的期限改成這一次他要審核的期限
+              <div class="item-note">之前發生過多次 Yaya 忘記改、說沒有資料的情況，後來都會特別進「實習生時數總覽」幫他改完；你自己再跟 Yaya 討論吧<br>
+              <a class="fin-link" href="https://app.notion.com/p/alleypin/370a1beefd0c47a9ad44e0c3467013d1" target="_blank">實習生時數總覽</a></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 其他事項 -->
+    <div class="cc-section" id="t2-newintern" style="margin-top:14px;">
+      <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">其他事項｜若有新實習生加入</div>
+      <div class="cc-section-body" style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+        <ol style="padding-left:18px;display:flex;flex-direction:column;gap:6px;">
+          <li>找 Yaya 拿到實習生的名字、信箱，以及帶他的人是誰</li>
+          <li>進 <a class="fin-link" href="https://app.notion.com/p/alleypin/a1296e7f1f654a01a38f939a673d7ff7" target="_blank">實習生時數表</a>，按按鈕開啟新的一份，標題改成實習生的名字，再把檔案傳給帶他的設計師<br>
+            <span style="color:var(--color-text-secondary);">＊使用教學已放在頁面上方，負責帶他的設計師會教；除非一直出錯，否則無需額外開會說明</span>
+          </li>
+          <li>此時數表的權限，只開給實習生本人與帶他的人</li>
+          <li>給之前需要先更新下方資料庫的 Filter</li>
+          <li>請 Yaya 把實習生加到 Notion 設計＋實習生群組<br><span style="font-size:12px;color:var(--color-cta);font-weight:600;">＊等實習生入職並開好 Notion 帳號之後才能執行！</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 所有對應頁面 -->
+    <div class="cc-section" id="t2-pages">
+      <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">此區所有對應頁面</div>
+      <div class="cc-section-body">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/a1296e7f1f654a01a38f939a673d7ff7" target="_blank">實習生時數表</a>
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/370a1beefd0c47a9ad44e0c3467013d1" target="_blank">實習生時數總覽（Yaya 審核頁）</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="task-divider"></div>
+
+  <!-- ══ TASK 3：獎金制費用 Check List 與 To Do ══ -->
+  <div class="task-block" id="task3">
+    <div class="task-label">
+      <div>
+        <div class="task-block-title">獎金制費用 Check List 與 To Do（包含網站獎金制）</div>
+        <div class="task-block-sub">每月月底確認一次；每季第一個月的 1–2 號再執行一次盤點，確認無誤後提醒 Yaya 審核</div>
+        <div style="margin-top:8px;font-size:13px;color:var(--color-text-secondary);line-height:1.8;">
+          ＊PS：這邊手動的滿多，一直沒有餘力把自動化蓋完。未來如果你想嘗試，可以先拿外包設計師的邏輯來 Try Try，統一邏輯後再延伸。<br>你自己想重新想也可以，自己摸索看看吧！
+        </div>
+        <div style="margin-top:8px;font-size:13px;font-weight:600;color:var(--color-cta);">
+          ⚠️ Yaya 需要在 9 號之前提交給 Iris，務必在此之前完成確認與通知。
+        </div>
+      </div>
+    </div>
+
+    <div class="period-grid" id="t3-checklist">
+
+      <div class="period-card full">
+        <div class="period-header mid">
+          <div class="period-dot"></div>
+          <div class="period-name">季初資料庫上的 TO DO</div>
+        </div>
+        <div class="period-body">
+          <div style="margin-bottom:10px;">
+            <a class="fin-link" href="https://app.notion.com/p/alleypin/Collection-2c5bf447adda8067888acdf65b7ea4ac" target="_blank">費用 Collection</a>
+            <span style="font-size:12px;color:var(--color-text-secondary);margin-left:6px;">此頁面為把所有獎金制相關的資料庫整合在一頁，方便比較有效率的確認</span>
+          </div>
+          <ul class="checklist">
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                請滑到費用 Collection 最底下的資料庫，於每季最後一天 or 每季的第一天，檢查此次的費用所有的票
+                <div class="item-note">＊或是拆成每月月底檢查，會比較不這麼時間緊迫（細節見下方「檢查票的細節確認」）</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                於每季最後一天，確認此季上線的網站是不是都有按上線了，以及頁面最上方左邊的「網站獎金制資料」是否資料正確
+                <div class="item-note">＊這邊只會顯示當前這一季跟上一季的費用</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                確認完成後，切該季費用（照設計師分組的那個），把個別的數值 Key in 到畫面上方費用 Collection 這個資料庫裡
+                <div class="item-note">＊嘗試過自動化，但失敗了，找數值對不上，時間成本過高，所以改回恢復成手動</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                Key in 完之後，展開費用區上方的按鈕「此季總額（勾選費用的紀錄此季）」，等他把頁面開好，以及一頁 Q? All 的頁面
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                滑到「費用每季成本（網站獎金制）」這個資料庫 Table 那個，把 Related 費用每季成本這個項目串到這次新增的 Q? All
+                <div class="item-note">→ 這樣才會有數據轉換給 Yaya 看</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                All 那頁要跑出藍色字一串，跟旁邊有黑色字（平常在 Slack 看到的確認訊息，哪位設計師，多少錢，含網站獎金制多少錢）
+                <div class="item-note">＊不確定他顯示的合理不合理，就切一下看 All 那個分頁，之前大概長怎樣</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                到完成這裡，就請 Yaya 進行確認
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                等發放獎金的 15 號之後，再回來確認自動化有沒有打勾已發放
+                <div class="item-note">＊快速確認方式：Table 那裡的分頁要是空的<br>目前已檢查到 5 月份的，上面的執行部分簡化版有打在頁面本身，最詳細的還是這份文件</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="period-card full">
+        <div class="period-header late">
+          <div class="period-dot"></div>
+          <div class="period-name">檢查票的細節確認</div>
+        </div>
+        <div class="period-body">
+          <ul class="checklist">
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                票名必須明確：改圖要寫是改哪張；若改多張圖，請設計師備註「改圖 ＊ 張數」
+                <div class="item-note">票名不明確的，請 tag 設計師補充清楚</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                單圖點數確認是否為 0.25
+                <div class="item-note">如果不是 0.25，tag 設計師，告知他單圖無法給多於 0.25；若是多圖，請回到 DBC 開票中心改成多圖</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                Line RM 需確認費用應該為多少，先確認是單頁的還是雙頁的，且固定綁定在其中一張上，其餘的要歸 0 並備註給負責設計師
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                Jason 的依貝、永悅門診表：確認量能票上有沒有 Key 多圖
+                <div class="item-note">Jason 跟 Yaya 協商後的共識，Jason 老是忘記，需主動提醒</div>
+              </div>
+            </li>
+            <li>
+              <input type="checkbox">
+              <div class="item-wrap">
+                所有有問題、有缺漏、有調整的票，都需要留言註記
+                 </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 其他注意事項 -->
+    <div class="cc-section" style="margin-top:14px;">
+      <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">其他注意事項</div>
+      <div class="cc-section-body" style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+        <ol style="padding-left:18px;display:flex;flex-direction:column;gap:14px;">
+          <li>
+            理論上「審核總費用」跟「費用（設計師分組）」在同一季裡，他總額要相同。
+            <div class="warn-box" style="margin-top:6px;">⚠️ 過往發生過：Yaya 打勾審核時，有些沒接外包但因設計師請假而臨時支援的設計師，他的票沒有被審核到，導致費用對不齊。且因為要趕發獎金的時間，需要在非上班時間進行確認，請特別留意。</div>
+          </li>
+          <li>
+            未來如果有設計新人加入（<strong style="color:var(--color-text);">僅限 VD</strong>），上方的費用 Collection 頁面要加入新人的頁面，以及「獎金制資料」的統計金額與統計金額（前一季）的函數都要調整，不然新人沒有辦法拿到錢。
+          </li>
+          <li>
+            這邊資料庫在用的函數，都是用 Notion AI 寫的，要改的話建議直接用 Notion AI，告訴他你要改什麼。
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 所有對應頁面 -->
+    <div class="cc-section" style="margin-top:14px;">
+      <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">此區所有對應頁面</div>
+      <div class="cc-section-body">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <a class="fin-link" href="https://app.notion.com/p/alleypin/Collection-2c5bf447adda8067888acdf65b7ea4ac" target="_blank">費用 Collection</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="task-divider"></div>
+
+  <!-- ══ TASK 4：現階段使用中的 N8N ══ -->
+  <div class="task-block" id="task4">
+    <div class="task-label">
+      <div>
+        <div class="task-block-title">現階段使用中的 N8N</div>
+      </div>
+    </div>
+
+    <div class="warn-box" style="margin-bottom:16px;">
+      <strong>⚠️ 接手前必須替換的系統帳號</strong><br>
+      Gmail OAuth（n8n）目前綁定 joy.chen@alleypin.com；Notion API Token 目前為 Joy 的個人 token。兩者皆需在交接完成前替換，否則所有自動化流程將中斷或卡住。<br><br>
+      Gmail OAuth 的部分，要先確認之後要用誰的名字發信，請他改成自己的帳號喔！
+    </div>
+
+    <!-- 外包費用相關 -->
+    <div class="cc-section" id="t4-outsource">
+      <div class="cc-section-header">外包費用相關</div>
+      <div class="cc-section-body">
+        <div class="wf-group">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Workflow</th>
+                <th>功能</th>
+                <th>觸發時機</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Design Fee-00</strong></td>
+                <td>交付完整性檢查：自動審核填寫資料是否有缺漏，通知設計部補件</td>
+                <td>每月 24 號 16:00</td>
+              </tr>
+              <tr>
+                <td><strong>auto update Design fees</strong></td>
+                <td>觸發 Notion Automation，將 key 帶入外包費用資料庫，撈資料供 final check</td>
+                <td>每月 26 號 14.00</td>
+              </tr>
+              <tr>
+                <td><strong>Design Fee-01</strong></td>
+                <td>寄費用彙總給負責人，負責人按 Approve 後，sub workflow 逐一寄費用確認信給各設計師（Send &amp; Wait 收集回覆）</td>
+                <td>每月 27 號 10:00</td>
+              </tr>
+              <tr>
+                <td><strong>Design Fees-04</strong></td>
+                <td>標記前一個月費用已結，資料自動封存</td>
+                <td>每月 25 號</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 設計部 / DBC 相關 -->
+    <div class="cc-section" id="t4-design">
+      <div class="cc-section-header">設計部 / DBC 相關</div>
+      <div class="cc-section-body">
+        <div class="wf-group">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Workflow</th>
+                <th>功能</th>
+                <th>觸發時機</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>DBC 空白票生成器</strong></td>
+                <td>N8N + HTML 畫面，協助設計師快速開立 DBC 空白票，減少重複開票的行政負擔<br><span style="font-size:11.5px;color:var(--color-text-secondary);">＊此項會直接 Pass 給 Fish 負責，不需要維護</span></td>
+                <td>手動觸發</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="info-box" style="margin-top:10px;">
+          能維護現有 workflow 約需 2–3 個月（需全部跑過一遍才算理解）。目前僅留下必要的，其他純為了工作上更方便或監控用的，考量目前情況已與 Ethan 討論後，全數關掉。
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 如果未來要改 / 寫新的 N8N -->
+  <div class="cc-section" id="t4-claude-tips" style="margin-top:16px;">
+    <div class="cc-section-header" style="background:var(--color-surface-low);color:var(--color-text-secondary);">如果未來要改 N8N 上的機器人</div>
+    <div class="cc-section-body" style="font-size:13px;color:var(--color-text-secondary);line-height:1.9;">
+      <div style="margin-bottom:16px;">
+        <div style="font-weight:600;color:var(--color-text);margin-bottom:4px;">修改現有 Workflow</div>
+        下載該 Workflow 的 JSON 檔，丟給 Claude，告訴他你要改什麼，請他直接幫你改好這份 JSON 檔；改完後刪除 N8N 上原本的 Workflow，把新的 JSON 上傳上去，再按測試跑。
+      </div>
+      <div>
+        <div style="font-weight:600;color:var(--color-text);margin-bottom:4px;">建立新的 Workflow</div>
+        把需求、邏輯、要達成什麼結果，一起丟給 Claude 請他產出 JSON 檔；到 N8N 開一支新的 Workflow 並上傳檔案，叫 N8N 告訴你哪些需要自己手動設定（例如要發信的話，需要接自己的 Gmail 帳號這類的），請他列出清單與步驟，設定好之後再按測試跑。
+      </div>
+    </div>
+  </div>
+
+  <div style="height:40px;"></div>
+  <div style="font-size:12px;color:var(--color-text-disabled);text-align:center;padding-bottom:32px;">Last update time 06.Jun.2026 by Jou-Yu | Joy</div>
+</main>
+</div>
+
+<button id="reset-btn" onclick="resetAll()" title="清除所有勾選">重置所有勾選</button>
+
+<script>
+const sections = document.querySelectorAll('[id]');
+const links = document.querySelectorAll('.sidebar a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 140) current = s.id;
+  });
+  links.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+});
+
+function toggleNav() {
+  const drawer = document.getElementById('mobileDrawer');
+  drawer.classList.toggle('open');
+}
+function closeNav() {
+  document.getElementById('mobileDrawer').classList.remove('open');
+}
+
+function resetAll() {
+  document.querySelectorAll('.checklist input[type="checkbox"]').forEach(cb => {
+    cb.checked = false;
+  });
+}
+</script>
+</body>
+</html>
